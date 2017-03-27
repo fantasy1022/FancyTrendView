@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.fantasy1022.googletrendview.GoogleTrendView
+        android:id="@+id/googleTrendView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/choose_grid"
+        app:colorArray="@array/trendcolors"
+        app:cursorBlinkInterval="300"
+        app:cursorBlinkTimesAfterTypeDone="10"
+        app:cursorWidth="3dp"
+        app:flipDirection="random"
+        app:flipSpeed="1000"
+        app:textChangeType="random"
+        app:textSize="10sp"
+        app:typedSpeed="200" />
+
+    <!--app:textArray="@array/demoTrendArray"-->
+
+</FrameLayout>

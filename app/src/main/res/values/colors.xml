@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="black_overlay">#66000000</color>
+
+
+    <item name="material_blue" type="color">#FF4285F4</item>
+    <item name="material_red" type="color">#FFea4335</item>
+    <item name="material_green" type="color">#FF34a852</item>
+    <item name="material_yellow" type="color">#FFfabb05</item>
+
+    <integer-array name="trendcolors">
+        <item>@color/material_blue</item>
+        <item>@color/material_red</item>
+        <item>@color/material_green</item>
+        <item>@color/material_yellow</item>
+    </integer-array>
+</resources>

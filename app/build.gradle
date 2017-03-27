@@ -1,0 +1,140 @@
+apply plugin: 'com.android.application'
+apply plugin: 'spoon'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.fantasy1022.googletrendapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        jackOptions {
+//            enabled true
+//        }
+        resConfig  "zh"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled = true
+        }
+    }
+
+    lintOptions {
+        lintConfig file("$project.rootDir/tools/rules-lint.xml")
+        htmlOutput file("$project.buildDir/outputs/lint/lint.html")
+        abortOnError false
+        warningsAsErrors true
+        xmlReport false
+    }
+    productFlavors {
+        prod {
+            //resValue "string", "app_name", "GoogleTrendApp"
+        }
+        mock {
+            applicationIdSuffix ".mock"
+            //resValue "string", "app_name", "Mock GoogleTrendApp"
+        }
+    }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+spoon {
+    debug = true;
+    // To grant permissions to Android M >= devices */
+    grantAllPermissions = true
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':googletrendview')
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    compile "com.android.support:transition:$rootProject.supportLibraryVersion"
+
+    //Retrofit2
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$rootProject.rxJava2AdapterVersion"
+
+    //RxJava2
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJava2Version"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+
+    //OKhttp3
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version"
+    compile "com.squareup.okhttp3:mockwebserver:$rootProject.okhttp3Version"
+
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    //Tool
+    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+
+    //UI
+    compile "com.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion"
+
+    //Dependencies for JUNit and unit tests.
+    testCompile "junit:junit:$rootProject.junitVersion"
+    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"    //2.7.11 is the newest version
+    testCompile("org.powermock:powermock-module-junit4:$rootProject.powerMockito")
+    testCompile("org.powermock:powermock-api-mockito:$rootProject.powerMockito")
+
+    //Dependencies for Espresso
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
+        exclude group: 'com.android.support'
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-v4'
+    }
+
+    // Android JUnit Runner
+    androidTestCompile("com.android.support.test:runner:$rootProject.runnerVersion") {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    // JUnit4 Rules
+    androidTestCompile("com.android.support.test:rules:$rootProject.rulesVersion") {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+
+    //Spoon
+    androidTestCompile "com.jraska:falcon-spoon-compat:$rootProject.spoonCompactVersion"
+
+    // UiAutomator
+    androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:$rootProject.uiautomatorVersion"
+
+    //Leakcanary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanaryVersion"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
+
+}

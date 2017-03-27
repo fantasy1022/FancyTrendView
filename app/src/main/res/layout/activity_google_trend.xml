@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.fantasy1022.googletrendapp.com.fantasy1022.googletrendapp.presentation.trend.GoogleTrendActivity">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/trendRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/noTrendInfoTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/trend_error"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:visibility="invisible" />
+
+    <!--<GoogleTrendView-->
+    <!--android:id="@+id/googleTrendView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:contentDescription="@string/choose_grid"-->
+    <!--app:colorArray="@array/trendcolors"-->
+    <!--app:cursorBlinkInterval="300"-->
+    <!--app:cursorBlinkTimesAfterTypeDone="10"-->
+    <!--app:cursorWidth="3dp"-->
+    <!--app:flipDirection="random"-->
+    <!--app:flipSpeed="1000"-->
+    <!--app:textArray="@array/demoTrendArray"-->
+    <!--app:textChangeType="random"-->
+    <!--app:textSize="10sp"-->
+    <!--app:typedSpeed="200" />-->
+
+
+</RelativeLayout>

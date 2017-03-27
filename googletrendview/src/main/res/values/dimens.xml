@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="paddingBorder">5dp</dimen>
+    <dimen name="textSize">10sp</dimen>
+    <dimen name="cursorWidth">2dp</dimen>
+</resources>

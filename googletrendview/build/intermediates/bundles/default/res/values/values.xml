@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="trendcolors">
+        <item>@color/material_blue</item>
+        <item>@color/material_red</item>
+        <item>@color/material_green</item>
+        <item>@color/material_yellow</item>
+    </integer-array>
+    <item name="material_blue" type="color">#FF4285F4</item>
+    <item name="material_green" type="color">#FF34a852</item>
+    <item name="material_red" type="color">#FFea4335</item>
+    <item name="material_yellow" type="color">#FFfabb05</item>
+    <declare-styleable name="GoogleTrendView"><attr format="integer" name="flipSpeed"/><attr format="enum" name="flipDirection">
+            <enum name="random" value="0"/>
+            <enum name="up" value="1"/>
+            <enum name="down" value="2"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="4"/>
+        </attr><attr format="enum" name="textChangeType">
+            <enum name="random" value="0"/>
+            <enum name="increase" value="1"/>
+            <enum name="decrease" value="2"/>
+        </attr><attr format="integer" name="typedSpeed"/><attr format="integer" name="cursorBlinkInterval"/><attr format="dimension" name="cursorWidth"/><attr format="integer" name="cursorBlinkTimesAfterTypeDone"/><attr format="dimension" name="textSize"/><attr format="reference" name="textArray"/><attr format="reference" name="colorArray"/></declare-styleable>
+    <dimen name="cursorWidth">2dp</dimen>
+    <dimen name="paddingBorder">5dp</dimen>
+    <dimen name="textSize">10sp</dimen>
+    <string name="app_name">"GoogleTrendView"</string>
+</resources>

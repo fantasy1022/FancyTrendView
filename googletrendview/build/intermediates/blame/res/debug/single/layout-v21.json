@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/fantasy_apple/AndroidStudioProjects/google-trend-app/googletrendview/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/fantasy_apple/.android/build-cache/5f2a0c21ee3f4cb1b8fefba63e3f8e7d0f137314/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/fantasy_apple/AndroidStudioProjects/google-trend-app/googletrendview/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/fantasy_apple/.android/build-cache/5f2a0c21ee3f4cb1b8fefba63e3f8e7d0f137314/output/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/fantasy_apple/AndroidStudioProjects/google-trend-app/googletrendview/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/fantasy_apple/.android/build-cache/5f2a0c21ee3f4cb1b8fefba63e3f8e7d0f137314/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/fantasy_apple/AndroidStudioProjects/google-trend-app/googletrendview/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/fantasy_apple/.android/build-cache/5f2a0c21ee3f4cb1b8fefba63e3f8e7d0f137314/output/res/layout-v21/notification_template_custom_big.xml"
+    }
+]
