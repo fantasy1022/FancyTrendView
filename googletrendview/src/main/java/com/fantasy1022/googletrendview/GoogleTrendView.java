@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 
-import com.fantasy1022.googletrendview.common.UiUtils;
 import com.fantasy1022.googletrendview.common.ChangeType;
 import com.fantasy1022.googletrendview.common.Constant;
 import com.fantasy1022.googletrendview.common.FlipDirectionType;
@@ -168,7 +167,6 @@ public class GoogleTrendView extends RelativeLayout implements TypedTextView.OnB
             Log.d(TAG, "change trend list");
             trendList = tempTrendList;
             tempTrendList = null;
-            UiUtils.animateForViewGroupTransition(this);
         }
     }
 
@@ -191,11 +189,11 @@ public class GoogleTrendView extends RelativeLayout implements TypedTextView.OnB
         }
     }
 
-    private void doFlipAnimation(View beginView, View endView, int flipType) {//
+    private void doFlipAnimation(final View beginView, final View endView,final int flipType) {//
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());//TODO:Use another Interpolator
         animator.setDuration(flipSpeed);
-        int beginColorIndex = getNextColorIndex();
+        final int beginColorIndex = getNextColorIndex();
         beginView.setBackgroundColor(trendColorList.get(beginColorIndex));
 
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
