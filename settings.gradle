@@ -1,1 +1,1 @@
-include ':app', ':googletrendview'
+include ':app', ':library'

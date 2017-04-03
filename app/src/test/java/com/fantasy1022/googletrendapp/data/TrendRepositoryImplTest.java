@@ -18,12 +18,9 @@ package com.fantasy1022.googletrendapp.data;
 
 import android.support.v4.util.ArrayMap;
 
-import com.fantasy1022.googletrendapp.data.TrendRepository;
-import com.fantasy1022.googletrendapp.data.TrendRepositoryImpl;
+import com.fantasy1022.googletrendapp.common.Constant;
 import com.fantasy1022.googletrendapp.data.remote.GoogleTrendRestService;
-import com.fantasy1022.googletrendapp.injection.Injection;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
-
 
 import org.junit.Before;
 import org.junit.Test;
@@ -65,7 +62,7 @@ public class TrendRepositoryImplTest {
     @Test
     public void getGoogleTrend_200Response() {
         //Given
-        when(googleTrendRestService.getGoogleTrend()).thenReturn(Single.just(Injection.generateTrendMap()));
+        when(googleTrendRestService.getGoogleTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
 
         //When
         TestObserver<ArrayMap<String, List<String>>> subscriber = new TestObserver<>();
@@ -81,7 +78,7 @@ public class TrendRepositoryImplTest {
     @Test
     public void getGoogleTrend_200ResponseDelay5Secs() {
         //Given
-        when(googleTrendRestService.getGoogleTrend()).thenReturn(Single.just(Injection.generateTrendMap()).delay(5, TimeUnit.SECONDS));
+        when(googleTrendRestService.getGoogleTrend()).thenReturn(Single.just(Constant.generateTrendMap()).delay(5, TimeUnit.SECONDS));
 
         //When
         TestObserver<ArrayMap<String, List<String>>> subscriber = new TestObserver<>();
@@ -126,7 +123,7 @@ public class TrendRepositoryImplTest {
     @Test//Test retry logic
     public void getGoogleTrend_IOExceptionThan200Response() {
         //Given
-        when(googleTrendRestService.getGoogleTrend()).thenReturn(getIOExceptionError(), Single.just(Injection.generateTrendMap()));
+        when(googleTrendRestService.getGoogleTrend()).thenReturn(getIOExceptionError(), Single.just(Constant.generateTrendMap()));
 
         //When
         TestObserver<ArrayMap<String, List<String>>> subscriber = new TestObserver<>();

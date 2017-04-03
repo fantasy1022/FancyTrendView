@@ -1,2 +1,0 @@
-D com/fantasy1022/googletrendview/common/ChangeType$type
-D com/fantasy1022/googletrendview/common/FlipDirectionType$type

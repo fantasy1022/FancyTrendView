@@ -45,6 +45,11 @@ public class GoogleTrendPresenter extends BasePresenter<GoogleTrendContract.View
     }
 
     @Override
+    public void generateCountryCodeMapping() {
+        Constant.generateCountryCodeMapping();
+    }
+
+    @Override
     public void retrieveAllTrend() {
         checkViewAttached();
         addSubscription(trendRepository.getAllTrend()

@@ -134,6 +134,7 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
         ButterKnife.bind(this);
         googleTrendPresenter = new GoogleTrendPresenter(Injection.provideTrendRepo(), Schedulers.io(), AndroidSchedulers.mainThread());
         googleTrendPresenter.attachView(this);
+        googleTrendPresenter.generateCountryCodeMapping();
         mVisible = true;
         setUpRecyclerView();
     }
@@ -153,7 +154,7 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
                             .itemsCallback(new MaterialDialog.ListCallback() {
                                 @Override
                                 public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                    String code = Injection.getCountryCode(String.valueOf(text));
+                                    String code = Constant.getCountryCode(String.valueOf(text));
                                     googleTrendPresenter.retrieveSingleTrend(code, position);
                                 }
                             })

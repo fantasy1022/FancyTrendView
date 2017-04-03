@@ -20,9 +20,6 @@ import android.util.Log;
 
 import com.fantasy1022.googletrendapp.common.Constant;
 import com.fantasy1022.googletrendapp.data.TrendRepository;
-import com.fantasy1022.googletrendapp.presentation.trend.GoogleTrendContract;
-import com.fantasy1022.googletrendapp.presentation.trend.GoogleTrendPresenter;
-import com.fantasy1022.googletrendapp.injection.Injection;
 import com.fantasy1022.googletrendapp.presentation.base.BasePresenter;
 
 import org.junit.Before;
@@ -73,13 +70,13 @@ public class GoogleTrendPresenterTest {
     @Test
     public void getGoogleTrend_ReturnResult() {
         //Given
-        when(trendRepository.getAllTrend()).thenReturn(Single.just(Injection.generateTrendMap()));
+        when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
         //When
         googleTrendPresenter.retrieveAllTrend();
         //Then
         verify(view).showLoading();
         verify(view).hideLoading();
-        verify(view).showTrendResult(Injection.generateTrendMap().get(Constant.DEFAULT_COUNTRY_CODE));
+        verify(view).showTrendResult(Constant.generateTrendMap().get(Constant.DEFAULT_COUNTRY_CODE));
         verify(view, never()).showErrorScreen();
     }
 
@@ -99,7 +96,7 @@ public class GoogleTrendPresenterTest {
     @Test
     public void changeCountryTrend() { //Get all trend firstly
         //Given 
-        when(trendRepository.getAllTrend()).thenReturn(Single.just(Injection.generateTrendMap()));
+        when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
         //When 
         googleTrendPresenter.retrieveAllTrend();
         googleTrendPresenter.retrieveSingleTrend(anyString(), anyInt());
