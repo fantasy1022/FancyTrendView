@@ -31,9 +31,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.fantasy1022.googletrendapp.R;
 import com.fantasy1022.googletrendapp.common.Constant;
 import com.fantasy1022.googletrendapp.common.GridType;
-import com.fantasy1022.googletrendapp.R;
+import com.fantasy1022.googletrendapp.common.SPUtils;
 import com.fantasy1022.googletrendapp.common.UiUtils;
 import com.fantasy1022.googletrendapp.injection.Injection;
 
@@ -54,14 +55,12 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
     RecyclerView trendRecycleView;
     @BindView(R.id.noTrendInfoTxt)
     TextView noTrendInfoTxt;
-//    @BindView(R.id.googleTrendView)
-//    GoogleTrendView googleTrendView;
     View decorView;
 
     private GoogleTrendContract.Presenter googleTrendPresenter;
     private GoogleTrendAdapter googleTrendAdapter;
     private ArrayList<List<String>> trendItemList;
-
+    private String[] countries;
     private static final boolean AUTO_HIDE = true;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -132,10 +131,11 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
         setContentView(R.layout.activity_google_trend);
         decorView = getWindow().getDecorView();
         ButterKnife.bind(this);
-        googleTrendPresenter = new GoogleTrendPresenter(Injection.provideTrendRepo(), Schedulers.io(), AndroidSchedulers.mainThread());
+        googleTrendPresenter = new GoogleTrendPresenter(new SPUtils(this), Injection.provideTrendRepo(), Schedulers.io(), AndroidSchedulers.mainThread());
         googleTrendPresenter.attachView(this);
         googleTrendPresenter.generateCountryCodeMapping();
         mVisible = true;
+        countries = getResources().getStringArray(R.array.trendCountryName);
         setUpRecyclerView();
     }
 
@@ -151,12 +151,9 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
                     new MaterialDialog.Builder(GoogleTrendActivity.this)
                             .title(R.string.choose_country)
                             .items(R.array.trendCountryName)
-                            .itemsCallback(new MaterialDialog.ListCallback() {
-                                @Override
-                                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                    String code = Constant.getCountryCode(String.valueOf(text));
-                                    googleTrendPresenter.retrieveSingleTrend(code, position);
-                                }
+                            .itemsCallback((dialog, view, which, text) -> {
+                                String code = Constant.getCountryCode(String.valueOf(text));
+                                googleTrendPresenter.retrieveSingleTrend(code, position);
                             })
                             .show();
                 }
@@ -230,67 +227,78 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.gridNum) {
-            Log.d(TAG, "gridNum");
-            //TODO:Use custom view or MaterialDialog
             new MaterialDialog.Builder(GoogleTrendActivity.this)
                     .title(R.string.choose_grid)
                     .items(R.array.gridItemName)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            switch (which) {
-                                case GridType.GRID_1_PLUS_1://1*1 1 item
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 1));//1 column
-                                    googleTrendAdapter.changeRowNumber(1);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_2_PLUS_1:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 1));//1 column
-                                    googleTrendAdapter.changeRowNumber(2);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_3_PLUS_1:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 1));//1 column
-                                    googleTrendAdapter.changeRowNumber(3);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_1_PLUS_2:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 2));
-                                    googleTrendAdapter.changeRowNumber(1);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_2_PLUS_2:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 2));
-                                    googleTrendAdapter.changeRowNumber(2);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_3_PLUS_2:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 2));
-                                    googleTrendAdapter.changeRowNumber(3);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_1_PLUS_3:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 3));
-                                    googleTrendAdapter.changeRowNumber(1);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_2_PLUS_3:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 3));
-                                    googleTrendAdapter.changeRowNumber(2);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                                case GridType.GRID_3_PLUS_3:
-                                    trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 3));
-                                    googleTrendAdapter.changeRowNumber(3);
-                                    UiUtils.animateForViewGroupTransition(trendRecycleView);
-                                    break;
-                            }
+                    .itemsCallback((dialog, view, which, text) -> {
+                        switch (which) {
+                            case GridType.GRID_1_PLUS_1://1*1 1 item
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 1));//1 column
+                                googleTrendAdapter.changeRowNumber(1);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_2_PLUS_1:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 1));//1 column
+                                googleTrendAdapter.changeRowNumber(2);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_3_PLUS_1:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 1));//1 column
+                                googleTrendAdapter.changeRowNumber(3);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_1_PLUS_2:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 2));
+                                googleTrendAdapter.changeRowNumber(1);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_2_PLUS_2:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 2));
+                                googleTrendAdapter.changeRowNumber(2);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_3_PLUS_2:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 2));
+                                googleTrendAdapter.changeRowNumber(3);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_1_PLUS_3:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 3));
+                                googleTrendAdapter.changeRowNumber(1);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_2_PLUS_3:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 3));
+                                googleTrendAdapter.changeRowNumber(2);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
+                            case GridType.GRID_3_PLUS_3:
+                                trendRecycleView.setLayoutManager(new CustomGridLayoutManager(GoogleTrendActivity.this, 3));
+                                googleTrendAdapter.changeRowNumber(3);
+                                UiUtils.animateForViewGroupTransition(trendRecycleView);
+                                break;
                         }
                     })
                     .show();
-
-
             return true;
+        } else if (id == R.id.defaultCountry) {
+
+            new MaterialDialog.Builder(GoogleTrendActivity.this)
+                    .title(R.string.choose_default_country)
+                    .items(R.array.trendCountryName) //get
+                    .itemsCallbackSingleChoice(googleTrendPresenter.getDefaultCountryIndex(), (dialog, itemView, which, text) -> {
+                        Log.d(TAG, "onSelection:" + which);
+                        String code = Constant.getCountryCode(countries[which]);
+                        googleTrendPresenter.setDefaultCountryCode(code);
+                        googleTrendPresenter.setDefaultCountryIndex(which);
+                        for (int i = 0; i < Constant.DEFAULT_TREND_ITEM_NUMBER; i++) {
+                            googleTrendPresenter.retrieveSingleTrend(code, i);
+                        }
+                        Log.d(TAG, "code:" + code);
+                        return true;
+                    })
+                    .positiveText(android.R.string.ok)
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -353,4 +361,6 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
         Log.d(TAG, "onDestroy");
         super.onDestroy();
     }
+
+
 }

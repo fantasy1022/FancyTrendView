@@ -20,7 +20,17 @@
     <item
         android:id="@+id/gridNum"
         android:icon="@drawable/ic_dashboard_white_24dp"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="@string/choose_grid"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/defaultCountry"
+        android:icon="@drawable/ic_public_white_24dp"
+        android:orderInCategory="2"
+        android:title="@string/choose_default_country"
+        app:showAsAction="always" />
+
+
+
 </menu>

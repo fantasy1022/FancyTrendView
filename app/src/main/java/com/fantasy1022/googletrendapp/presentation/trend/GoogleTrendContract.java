@@ -46,6 +46,14 @@ public interface GoogleTrendContract {
     interface Presenter extends MvpPresenter<View> {
         void generateCountryCodeMapping();
 
+        String getDefaultCountryCode();
+
+        void setDefaultCountryCode(String code);
+
+        int getDefaultCountryIndex();
+
+        void setDefaultCountryIndex(int index);
+
         void retrieveAllTrend();
 
         void retrieveSingleTrend(String countryCode, int position);

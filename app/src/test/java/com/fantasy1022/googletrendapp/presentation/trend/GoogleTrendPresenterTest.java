@@ -16,9 +16,11 @@
 
 package com.fantasy1022.googletrendapp.presentation.trend;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.fantasy1022.googletrendapp.common.Constant;
+import com.fantasy1022.googletrendapp.common.SPUtils;
 import com.fantasy1022.googletrendapp.data.TrendRepository;
 import com.fantasy1022.googletrendapp.presentation.base.BasePresenter;
 
@@ -32,7 +34,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
-
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -53,6 +54,8 @@ import static org.mockito.Mockito.when;
 public class GoogleTrendPresenterTest {
 
     @Mock
+    SPUtils spUtils;
+    @Mock
     TrendRepository trendRepository;
     @Mock
     GoogleTrendContract.View view;
@@ -63,7 +66,7 @@ public class GoogleTrendPresenterTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(Log.class);//api-mockito in dependency
-        googleTrendPresenter = new GoogleTrendPresenter(trendRepository, Schedulers.trampoline(), Schedulers.trampoline());
+        googleTrendPresenter = new GoogleTrendPresenter(spUtils,trendRepository, Schedulers.trampoline(), Schedulers.trampoline());
         googleTrendPresenter.attachView(view);
     }
 
@@ -71,12 +74,13 @@ public class GoogleTrendPresenterTest {
     public void getGoogleTrend_ReturnResult() {
         //Given
         when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
+        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
         //When
         googleTrendPresenter.retrieveAllTrend();
         //Then
         verify(view).showLoading();
         verify(view).hideLoading();
-        verify(view).showTrendResult(Constant.generateTrendMap().get(Constant.DEFAULT_COUNTRY_CODE));
+        verify(view).showTrendResult(Constant.generateTrendMap().get(Constant.DEFAULT_COUNTRY_CODE));//TODO:Change to getDefaultcode
         verify(view, never()).showErrorScreen();
     }
 
@@ -84,6 +88,7 @@ public class GoogleTrendPresenterTest {
     public void getGoogleTrend_ReturnError() {
         //Given 
         when(trendRepository.getAllTrend()).thenReturn(Single.error(new IOException()));
+        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
         //When 
         googleTrendPresenter.retrieveAllTrend();
         //Then 
@@ -97,6 +102,7 @@ public class GoogleTrendPresenterTest {
     public void changeCountryTrend() { //Get all trend firstly
         //Given 
         when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
+        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
         //When 
         googleTrendPresenter.retrieveAllTrend();
         googleTrendPresenter.retrieveSingleTrend(anyString(), anyInt());
@@ -108,6 +114,8 @@ public class GoogleTrendPresenterTest {
 
     @Test(expected = BasePresenter.MvpViewNotAttachedException.class)
     public void search_NotAttached_ThrowsMvpException() {
+        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
+
         googleTrendPresenter.detachView();
         googleTrendPresenter.retrieveAllTrend();
         verify(view, never()).showLoading();

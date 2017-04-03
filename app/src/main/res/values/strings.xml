@@ -17,7 +17,11 @@
 <resources>
     <string name="choose_country">Choose country</string>
     <string name="choose_grid">Choose grid</string>
+    <string name="choose_default_country">Choose default country</string>
     <string name="trend_error">Do not have the newest trend.</string>
+    <string name="yes"></string>
+
+
     <string-array name="gridItemName">
         <item>1*1</item>
         <item>2*1</item>

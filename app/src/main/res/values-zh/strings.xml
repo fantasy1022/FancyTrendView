@@ -17,5 +17,8 @@
 <resources>
     <string name="choose_country">選擇國家</string>
     <string name="choose_grid">選擇格數</string>
+    <string name="choose_default_country">選擇初始國家</string>
     <string name="trend_error">目前沒有最新的趨勢</string>
+
+
 </resources>
