@@ -18,11 +18,10 @@
     <string name="choose_country">Choose country</string>
     <string name="choose_grid">Choose grid</string>
     <string name="choose_default_country">Choose default country</string>
+    <string name="choose_click_behavior">Choose click behavior</string>
     <string name="trend_error">Do not have the newest trend.</string>
-    <string name="yes"></string>
 
-
-    <string-array name="gridItemName">
+    <string-array name="grid_item_name">
         <item>1*1</item>
         <item>2*1</item>
         <item>3*1</item>
@@ -35,7 +34,7 @@
     </string-array>
 
 
-    <string-array name="trendCountryName">
+    <string-array name="trend_country_name">
         <item>Argentina</item>
         <item>Australia</item>
         <item>Austria</item>
@@ -84,6 +83,13 @@
         <item>United States</item>
         <item>Vietnam</item>
     </string-array>
+
+
+    <string-array name="click_behavior_item_name">
+        <item>Go to google search</item>
+        <item>Change single country</item>
+    </string-array>
+
 
     <string-array name="demoTrendArray">
         <item>Google</item>

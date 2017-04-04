@@ -54,6 +54,10 @@ public interface GoogleTrendContract {
 
         void setDefaultCountryIndex(int index);
 
+        int getClickBehavior();
+
+        void setClickBehavior(int index);
+
         void retrieveAllTrend();
 
         void retrieveSingleTrend(String countryCode, int position);

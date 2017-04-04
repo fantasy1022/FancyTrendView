@@ -18,7 +18,11 @@ package com.fantasy1022.googletrendapp.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by fantasy_apple on 2017/4/3.
@@ -27,6 +31,13 @@ import android.support.annotation.Nullable;
 public class SPUtils {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+
+    @IntDef({ClickBehaviorItem.singlecountry, ClickBehaviorItem.googleSearch})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ClickBehaviorItem {
+        int googleSearch = 0;
+        int singlecountry = 1;
+    }
 
     public SPUtils(Context context) {
         sp = context.getSharedPreferences("data", Context.MODE_PRIVATE);

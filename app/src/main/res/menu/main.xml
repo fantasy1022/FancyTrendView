@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Fantasy Fang
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,6 +30,11 @@
         android:title="@string/choose_default_country"
         app:showAsAction="always" />
 
-
+    <item
+        android:id="@+id/clickBehavior"
+        android:icon="@drawable/ic_touch_app_white_24dp"
+        android:orderInCategory="3"
+        android:title="@string/choose_click_behavior"
+        app:showAsAction="ifRoom" />
 
 </menu>

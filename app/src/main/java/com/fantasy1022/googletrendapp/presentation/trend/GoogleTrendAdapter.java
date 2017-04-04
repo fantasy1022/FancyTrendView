@@ -53,7 +53,7 @@ public class GoogleTrendAdapter extends RecyclerView.Adapter<GoogleTrendAdapter.
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int position);
+        void onItemClick(View v, String trend, int position);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class GoogleTrendAdapter extends RecyclerView.Adapter<GoogleTrendAdapter.
 
         @Override
         public void onClick(View v) {
-            listener.onItemClick(v, getLayoutPosition());
+            listener.onItemClick(v, googleTrendView.getNowText(), getLayoutPosition());
         }
     }
 

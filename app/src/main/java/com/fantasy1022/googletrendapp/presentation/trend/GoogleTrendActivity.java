@@ -17,7 +17,9 @@
 package com.fantasy1022.googletrendapp.presentation.trend;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -135,30 +137,35 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
         googleTrendPresenter.attachView(this);
         googleTrendPresenter.generateCountryCodeMapping();
         mVisible = true;
-        countries = getResources().getStringArray(R.array.trendCountryName);
+        countries = getResources().getStringArray(R.array.trend_country_name);
         setUpRecyclerView();
+        googleTrendPresenter.retrieveAllTrend();
     }
 
     private void setUpRecyclerView() {
 
         googleTrendAdapter = new GoogleTrendAdapter(this, trendItemList, Constant.DEFAULT_ROW_NUMBER, new GoogleTrendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, String trend, int position) {
                 if (!mVisible) {
-                    toggle();
-                    delayedHide(AUTO_HIDE_DELAY_MILLIS);
+                    GoogleTrendActivity.this.toggle();
+                    GoogleTrendActivity.this.delayedHide(AUTO_HIDE_DELAY_MILLIS);
                 } else {
-                    new MaterialDialog.Builder(GoogleTrendActivity.this)
-                            .title(R.string.choose_country)
-                            .items(R.array.trendCountryName)
-                            .itemsCallback((dialog, view, which, text) -> {
-                                String code = Constant.getCountryCode(String.valueOf(text));
-                                googleTrendPresenter.retrieveSingleTrend(code, position);
-                            })
-                            .show();
+                    if (googleTrendPresenter.getClickBehavior() == SPUtils.ClickBehaviorItem.googleSearch) {
+                        //TODO:Use chrome tab to implement
+                        Uri uri = Uri.parse("http://www.google.com/#q=" + trend);
+                        GoogleTrendActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                    } else if (googleTrendPresenter.getClickBehavior() == SPUtils.ClickBehaviorItem.singlecountry) {
+                        new MaterialDialog.Builder(GoogleTrendActivity.this)
+                                .title(R.string.choose_country)
+                                .items(R.array.trend_country_name)
+                                .itemsCallback((dialog, view, which, text) -> {
+                                    String code = Constant.getCountryCode(String.valueOf(text));
+                                    googleTrendPresenter.retrieveSingleTrend(code, position);
+                                })
+                                .show();
+                    }
                 }
-
-
             }
         });
         trendRecycleView.setLayoutManager(new CustomGridLayoutManager(this, Constant.DEFAULT_COLUMN_NUMBER));
@@ -179,7 +186,7 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
     @Override
     protected void onStart() {
         super.onStart();
-        googleTrendPresenter.retrieveAllTrend();
+
     }
 
     @Override
@@ -229,7 +236,7 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
         if (id == R.id.gridNum) {
             new MaterialDialog.Builder(GoogleTrendActivity.this)
                     .title(R.string.choose_grid)
-                    .items(R.array.gridItemName)
+                    .items(R.array.grid_item_name)
                     .itemsCallback((dialog, view, which, text) -> {
                         switch (which) {
                             case GridType.GRID_1_PLUS_1://1*1 1 item
@@ -282,10 +289,9 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
                     .show();
             return true;
         } else if (id == R.id.defaultCountry) {
-
             new MaterialDialog.Builder(GoogleTrendActivity.this)
                     .title(R.string.choose_default_country)
-                    .items(R.array.trendCountryName) //get
+                    .items(R.array.trend_country_name) //get
                     .itemsCallbackSingleChoice(googleTrendPresenter.getDefaultCountryIndex(), (dialog, itemView, which, text) -> {
                         Log.d(TAG, "onSelection:" + which);
                         String code = Constant.getCountryCode(countries[which]);
@@ -295,6 +301,16 @@ public class GoogleTrendActivity extends AppCompatActivity implements GoogleTren
                             googleTrendPresenter.retrieveSingleTrend(code, i);
                         }
                         Log.d(TAG, "code:" + code);
+                        return true;
+                    })
+                    .positiveText(android.R.string.ok)
+                    .show();
+        } else if (id == R.id.clickBehavior) {
+            new MaterialDialog.Builder(GoogleTrendActivity.this)
+                    .title(R.string.choose_click_behavior)
+                    .items(R.array.click_behavior_item_name)
+                    .itemsCallbackSingleChoice(googleTrendPresenter.getClickBehavior(), (dialog, itemView, which, text) -> {
+                        googleTrendPresenter.setClickBehavior(which);
                         return true;
                     })
                     .positiveText(android.R.string.ok)

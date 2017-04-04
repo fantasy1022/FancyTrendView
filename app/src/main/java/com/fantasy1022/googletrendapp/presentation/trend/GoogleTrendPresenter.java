@@ -96,6 +96,16 @@ public class GoogleTrendPresenter extends BasePresenter<GoogleTrendContract.View
     }
 
     @Override
+    public int getClickBehavior() {
+        return spUtils.getInt(Constant.SP_DEFAULT_CLICK_BEHAVIOR_KEY, 0);
+    }
+
+    @Override
+    public void setClickBehavior(@SPUtils.ClickBehaviorItem int index) {
+        spUtils.putInt(Constant.SP_DEFAULT_CLICK_BEHAVIOR_KEY, index);
+    }
+
+    @Override
     public void generateCountryCodeMapping() {
         Constant.generateCountryCodeMapping();
     }

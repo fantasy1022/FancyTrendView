@@ -58,6 +58,8 @@ public class GoogleTrendView extends RelativeLayout implements TypedTextView.OnB
     private List<String> trendList = new ArrayList<>();
     private List<String> tempTrendList;
     private boolean isRunning;
+    private int count;
+
 
     public GoogleTrendView(Context context) {
         super(context);
@@ -205,7 +207,11 @@ public class GoogleTrendView extends RelativeLayout implements TypedTextView.OnB
         }
     }
 
-    private void doFlipAnimation(final View beginView, final View endView,final int flipType) {//
+    public String getNowText() {
+        return trendList.get(count);
+    }
+
+    private void doFlipAnimation(final View beginView, final View endView, final int flipType) {//
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());//TODO:Use another Interpolator
         animator.setDuration(flipSpeed);
@@ -305,10 +311,10 @@ public class GoogleTrendView extends RelativeLayout implements TypedTextView.OnB
 
     private class TypedRunnable implements Runnable {//TODO: change to animation logic function
         private boolean isClientShow;
-        int count;
 
-        public TypedRunnable(int count) {
-            this.count = count;
+
+        public TypedRunnable(int c) {
+            count = c;
         }
 
         @Override
