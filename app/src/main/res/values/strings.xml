@@ -21,7 +21,7 @@
     <string name="choose_click_behavior">Choose click behavior</string>
     <string name="trend_error">Do not have the newest trend.</string>
 
-    <string-array name="grid_item_name">
+    <string-array name="grid_item_name" translatable="false">
         <item>1*1</item>
         <item>2*1</item>
         <item>3*1</item>
@@ -34,7 +34,7 @@
     </string-array>
 
 
-    <string-array name="trend_country_name">
+    <string-array name="trend_country_name" translatable="false">
         <item>Argentina</item>
         <item>Australia</item>
         <item>Austria</item>
@@ -91,7 +91,7 @@
     </string-array>
 
 
-    <string-array name="demoTrendArray">
+    <string-array name="demoTrendArray" translatable="false">
         <item>Google</item>
         <item>Apple</item>
         <item>IBM</item>
