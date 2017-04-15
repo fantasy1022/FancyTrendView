@@ -126,7 +126,7 @@ public class GoogleTrendActivityTest {
     @Test
     public void mainActivity_Display_Get_Trend_error() throws Exception {
         MockGoogleTrendRestServiceImpl.setDummyGoogleTrendResult(Single.error(new IOException()));
-        Intent intent = new Intent("GoogleTrendActivity");
+        Intent intent = new Intent("FancyTrendActivity");
         testRule.launchActivity(intent);
         onView(withText(R.string.trend_error)).check(matches(isDisplayed()));
         FalconSpoon.screenshot(testRule.getActivity(), "Error_screen");

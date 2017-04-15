@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <declare-styleable name="GoogleTrendView">
+    <declare-styleable name="FancyTrendView">
         <attr name="flipSpeed" format="integer" />
         <attr name="flipDirection" format="enum">
             <enum name="random" value="0" />

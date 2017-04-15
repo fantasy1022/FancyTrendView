@@ -21,7 +21,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.fantasy1022.googletrendview.GoogleTrendView
+    <com.fantasy1022.fancytrendview.FancyTrendView
         android:id="@+id/googleTrendView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
