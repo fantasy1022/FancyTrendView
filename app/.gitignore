@@ -33,3 +33,13 @@ local.properties
 *~
 
 *.swp
+
+#Google service
+*.json
+
+#Key store
+/certs/
+
+
+
+
