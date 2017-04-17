@@ -1,4 +1,4 @@
-# built application files
+lt application files
 *.apk
 *.ap_
 
@@ -31,15 +31,3 @@ local.properties
 
 # Emacs temporary files
 *~
-
-*.swp
-
-#Google service
-*.json
-
-#Key store
-/certs/
-
-
-
-
