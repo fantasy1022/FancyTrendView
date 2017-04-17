@@ -14,5 +14,8 @@ android:
     #- extra-google-google_play_services
     #- addon-google_apis-google-19
 
+script:
+  - ./gradlew assembleRelease
+
 licenses:
     - '.+'
