@@ -28,7 +28,8 @@ It's also on Google Play:
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.fantasy1022.fancytrendview:core:0.8.0'
+    compile 'com.fantasy1022.fancytrendview:0.8.0'
 }
 ```
 
+# How to use
