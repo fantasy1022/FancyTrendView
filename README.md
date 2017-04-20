@@ -1,4 +1,5 @@
 # FancyTrendView
+ [ ![Download](https://api.bintray.com/packages/fantasy1022/fantasy1022/GoogleTrendView/images/download.svg) ](https://bintray.com/fantasy1022/fantasy1022/GoogleTrendView/_latestVersion)
 [![Build Status](https://travis-ci.org/fantasy1022/FancyTrendView.svg?branch=master)](https://travis-ci.org/fantasy1022/FancyTrendView)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1cbed3bc8a6f416a9ddb9da965d567a6)](https://www.codacy.com/app/fantasy1022/FancyTrendView?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fantasy1022/FancyTrendView&amp;utm_campaign=Badge_Grade)
 
