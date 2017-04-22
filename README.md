@@ -12,7 +12,7 @@ The behavior of Android APP is like Google trend web. https://trends.google.com/
 ![Screenshots gif](https://raw.githubusercontent.com/fantasy1022/FancyTrendView/master/art/showcase.gif)
 
 
-#Sample project 
+# Sample project 
 
 It's also on Google Play:
 
@@ -53,7 +53,7 @@ dependencies {
         app:typedSpeed="200" />
 ```
 
-#Custom color array
+### Custom color array
 ```xml
   <item name="material_blue" type="color">#FF4285F4</item>
     <item name="material_red" type="color">#FFea4335</item>
@@ -68,7 +68,7 @@ dependencies {
     </integer-array>
 ```
 
-#Custom text array
+### Custom text array
 ```xml
     <string-array name="demoTrendArray" translatable="false">
         <item>Google</item>
