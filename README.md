@@ -36,3 +36,48 @@ dependencies {
 ```
 
 # How to use
+```xml
+    <com.fantasy1022.fancytrendview.FancyTrendView
+        android:id="@+id/googleTrendView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:colorArray="@array/trendcolors"
+        app:cursorBlinkInterval="300"
+        app:cursorBlinkTimesAfterTypeDone="10"
+        app:cursorWidth="3dp"
+        app:flipDirection="random"
+        app:flipSpeed="1000"
+        app:textArray="@array/demoTrendArray"
+        app:textChangeType="random"
+        app:textSize="10sp"
+        app:typedSpeed="200" />
+```
+
+#Custom color array
+```xml
+  <item name="material_blue" type="color">#FF4285F4</item>
+    <item name="material_red" type="color">#FFea4335</item>
+    <item name="material_green" type="color">#FF34a852</item>
+    <item name="material_yellow" type="color">#FFfabb05</item>
+
+    <integer-array name="trendcolors">
+        <item>@color/material_blue</item>
+        <item>@color/material_red</item>
+        <item>@color/material_green</item>
+        <item>@color/material_yellow</item>
+    </integer-array>
+```
+
+#Custom text array
+```xml
+    <string-array name="demoTrendArray" translatable="false">
+        <item>Google</item>
+        <item>Apple</item>
+        <item>IBM</item>
+        <item>Microsoft</item>
+        <item>HTC</item>
+        <item>Amazon</item>
+        <item>OPPO</item>
+        <item>Asus</item>
+    </string-array>
+```
