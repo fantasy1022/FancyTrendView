@@ -9,6 +9,8 @@ The custom UI view including animation and typing text.
 
 The behavior of Android APP is like Google trend web. https://trends.google.com/trends/hottrends/visualize
 
+![Screenshots](https://raw.githubusercontent.com/fantasy1022/FancyTrendView/blob/master/art/ezgif.com-video-to-gif.gif)
+
 
 #Sample project 
 
