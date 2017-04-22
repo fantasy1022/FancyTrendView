@@ -22,16 +22,13 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
+        resConfig "zh"
         applicationId "com.fantasy1022.fancytrendapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        jackOptions {
-//            enabled true
-//        }
-        resConfig  "zh"
     }
     buildTypes {
         release {
@@ -52,11 +49,10 @@ android {
     }
     productFlavors {
         prod {
-            //resValue "string", "app_name", "GoogleTrendApp"
+
         }
         mock {
             applicationIdSuffix ".mock"
-            //resValue "string", "app_name", "Mock GoogleTrendApp"
         }
     }
 
@@ -65,6 +61,14 @@ android {
         if (variant.buildType.name.equals('release')
                 && variant.getFlavors().get(0).name.equals('mock')) {
             variant.setIgnore(true);
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    output.outputFile.name.replace("app-prod-release.apk", "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"))
         }
     }
 
@@ -115,7 +119,8 @@ dependencies {
 
     //Dependencies for JUNit and unit tests.
     testCompile "junit:junit:$rootProject.junitVersion"
-    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"    //2.7.11 is the newest version
+    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    //2.7.11 is the newest version
     testCompile("org.powermock:powermock-module-junit4:$rootProject.powerMockito")
     testCompile("org.powermock:powermock-api-mockito:$rootProject.powerMockito")
 

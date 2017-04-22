@@ -19,10 +19,8 @@ package com.fantasy1022.fancytrendview;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
@@ -147,42 +145,10 @@ public class FancyTrendView extends RelativeLayout implements TypedTextView.OnBl
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // Log.d(TAG, "getSuggestedMinimumWidth():" + getSuggestedMinimumWidth() + " widthMeasureSpec" + widthMeasureSpec);
-        // Log.d(TAG, "getSuggestedMinimumHeight():" + getSuggestedMinimumHeight() + " widthMeasureSpec" + heightMeasureSpec);
-//        int specMode = MeasureSpec.getMode(widthMeasureSpec);
-//        int specSize = MeasureSpec.getSize(widthMeasureSpec);
-//        Log.d(TAG, "specMode:" + specMode);
-//        Log.d(TAG, "specSize:" + specSize);
-
-        final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
-        final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-//        Log.d(TAG, "width:" + width);
-//        Log.d(TAG, "height:" + height);
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-    }
-
-    @Override
     public void onBlinkComplete() {
         handler.postDelayed(flipRunnable, 1);
         if (tempTrendList != null) {//If user choose another country, APP waits typing text finishing to show another trend
-            Log.d(TAG, "change trend list");
+            //Log.d(TAG, "change trend list");
             trendList = tempTrendList;
             tempTrendList = null;
         }
@@ -192,7 +158,7 @@ public class FancyTrendView extends RelativeLayout implements TypedTextView.OnBl
         if (list == null || list.size() == 0) {
             return;
         }
-        Log.d(TAG, "startAllAnimation");
+        //Log.d(TAG, "startAllAnimation");
         if (isRunning) {//Already run animation, so it just updates list
             tempTrendList = new ArrayList<>();
             for (String item : list) {
@@ -247,7 +213,7 @@ public class FancyTrendView extends RelativeLayout implements TypedTextView.OnBl
                         break;
                 }
                 if (progress == 1.0f) {//set endView to begin view state for next animation
-                    Log.d(TAG, "Animation complete");
+                    //Log.d(TAG, "Animation complete");
                     endView.setX(0);
                     endView.setY(0);
                     endView.setBackgroundColor(trendColorList.get(beginColorIndex));//Set color of begin view
@@ -294,7 +260,7 @@ public class FancyTrendView extends RelativeLayout implements TypedTextView.OnBl
         public void run() {
             if (flipDirectionType == FlipDirectionType.TYPE_RANDOM) {//Generate direction.
                 int num = ((int) (Math.random() * FlipDirectionType.TYEP_RIGHT)) + 1;//1~4
-                Log.d(TAG, "direction number:" + num);
+                //Log.d(TAG, "direction number:" + num);
                 if (isClientShow) {
                     doFlipAnimation(masterFlipLay, clientFlipLay, num);
                     isClientShow = false;

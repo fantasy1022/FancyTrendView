@@ -31,7 +31,7 @@ import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 import android.support.v7.widget.RecyclerView;
 
-import com.fantasy1022.googletrendapp.R;
+import com.fantasy1022.fancytrendapp.R;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,7 +42,6 @@ import java.io.File;
 
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by fantasy1022 on 2017/3/3.

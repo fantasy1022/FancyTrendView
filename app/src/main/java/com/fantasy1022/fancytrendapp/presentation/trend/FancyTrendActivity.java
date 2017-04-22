@@ -17,6 +17,7 @@
 package com.fantasy1022.fancytrendapp.presentation.trend;
 
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -153,8 +154,9 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
                 } else {
                     if (fancyTrendPresenter.getClickBehavior() == SPUtils.ClickBehaviorItem.googleSearch) {
                         //TODO:Use chrome tab to implement
-                        Uri uri = Uri.parse("http://www.google.com/#q=" + trend);
-                        FancyTrendActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                        intent.putExtra(SearchManager.QUERY, trend);
+                        startActivity(intent);
                     } else if (fancyTrendPresenter.getClickBehavior() == SPUtils.ClickBehaviorItem.singlecountry) {
                         new MaterialDialog.Builder(FancyTrendActivity.this)
                                 .title(R.string.choose_country)
