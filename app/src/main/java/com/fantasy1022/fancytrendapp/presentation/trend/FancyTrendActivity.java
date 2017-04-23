@@ -40,6 +40,7 @@ import com.fantasy1022.fancytrendapp.common.GridType;
 import com.fantasy1022.fancytrendapp.common.SPUtils;
 import com.fantasy1022.fancytrendapp.common.UiUtils;
 import com.fantasy1022.fancytrendapp.injection.Injection;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,7 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
     private FancyTrendAdapter googleTrendAdapter;
     private ArrayList<List<String>> trendItemList;
     private String[] countries;
+    private FirebaseAnalytics firebaseAnalytics;
     private static final boolean AUTO_HIDE = true;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -141,6 +143,7 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
         countries = getResources().getStringArray(R.array.trend_country_name);
         setUpRecyclerView();
         fancyTrendPresenter.retrieveAllTrend();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this); 
     }
 
     private void setUpRecyclerView() {
@@ -152,7 +155,11 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
                     FancyTrendActivity.this.toggle();
                     FancyTrendActivity.this.delayedHide(AUTO_HIDE_DELAY_MILLIS);
                 } else {
+                    Bundle bundle = new Bundle();
                     if (fancyTrendPresenter.getClickBehavior() == SPUtils.ClickBehaviorItem.googleSearch) {
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "search:" + trend);
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         //TODO:Use chrome tab to implement
                         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
                         intent.putExtra(SearchManager.QUERY, trend);
@@ -162,6 +169,9 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
                                 .title(R.string.choose_country)
                                 .items(R.array.trend_country_name)
                                 .itemsCallback((dialog, view, which, text) -> {
+                                    bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "single country");
+                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                     String code = Constant.getCountryCode(String.valueOf(text));
                                     fancyTrendPresenter.retrieveSingleTrend(code, position);
                                 })
@@ -237,6 +247,7 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Bundle bundle = new Bundle();
         if (id == R.id.gridNum) {
             new MaterialDialog.Builder(FancyTrendActivity.this)
                     .title(R.string.choose_grid)
@@ -244,46 +255,82 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
                     .itemsCallback((dialog, view, which, text) -> {
                         switch (which) {
                             case GridType.GRID_1_PLUS_1://1*1 1 item
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "1*1");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 1));//1 column
                                 googleTrendAdapter.changeRowNumber(1);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_2_PLUS_1:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "2*1");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 1));//1 column
                                 googleTrendAdapter.changeRowNumber(2);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_3_PLUS_1:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "3*1");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 1));//1 column
                                 googleTrendAdapter.changeRowNumber(3);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_1_PLUS_2:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "1*2");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 2));
                                 googleTrendAdapter.changeRowNumber(1);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_2_PLUS_2:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "2*2");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 2));
                                 googleTrendAdapter.changeRowNumber(2);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_3_PLUS_2:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "3*2");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 2));
                                 googleTrendAdapter.changeRowNumber(3);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_1_PLUS_3:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "1*3");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 3));
                                 googleTrendAdapter.changeRowNumber(1);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_2_PLUS_3:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "2*3");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 3));
                                 googleTrendAdapter.changeRowNumber(2);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
                                 break;
                             case GridType.GRID_3_PLUS_3:
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "gridNum");
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "3*3");
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                                 trendRecycleView.setLayoutManager(new CustomGridLayoutManager(FancyTrendActivity.this, 3));
                                 googleTrendAdapter.changeRowNumber(3);
                                 UiUtils.animateForViewGroupTransition(trendRecycleView);
@@ -301,6 +348,11 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
                         String code = Constant.getCountryCode(countries[which]);
                         fancyTrendPresenter.setDefaultCountryCode(code);
                         fancyTrendPresenter.setDefaultCountryIndex(which);
+
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "defaultCountry");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, countries[which]);
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                         for (int i = 0; i < Constant.DEFAULT_TREND_ITEM_NUMBER; i++) {
                             fancyTrendPresenter.retrieveSingleTrend(code, i);
                         }
@@ -314,6 +366,10 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
                     .title(R.string.choose_click_behavior)
                     .items(R.array.click_behavior_item_name)
                     .itemsCallbackSingleChoice(fancyTrendPresenter.getClickBehavior(), (dialog, itemView, which, text) -> {
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "clickBehavior");
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, which);
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                         fancyTrendPresenter.setClickBehavior(which);
                         return true;
                     })
