@@ -133,3 +133,4 @@ This attribute indicates the interval between two character.
 ```xml
 app:typedSpeed="200" //ms
 ```
+
