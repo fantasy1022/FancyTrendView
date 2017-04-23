@@ -158,9 +158,12 @@ dependencies {
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
 
+<<<<<<< HEAD
     //Firebase
     compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
     compile "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
+=======
+>>>>>>> master
 
 }
 
