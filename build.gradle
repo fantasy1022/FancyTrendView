@@ -34,6 +34,9 @@ ext {
     versionCode = 4
     versionName = '0.8.1'
 
+    // Library
+    libMinSdkVersion = 15
+
     // App dependencies
     supportLibraryVersion = '25.3.0'
     retrofitVersion = '2.1.0'
