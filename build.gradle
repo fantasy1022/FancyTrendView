@@ -10,6 +10,8 @@ buildscript {
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:1.2.2'
         classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -33,7 +35,7 @@ ext {
     compileSdkVersion = 25
     buildToolsVersion = '25.0.2'
     versionCode = 4
-    versionName = '0.8.1'
+    versionName = '0.8.2'
 
     // Library
     libMinSdkVersion = 15
