@@ -1,5 +1,5 @@
 # FancyTrendView
-[![Download](https://api.bintray.com/packages/fantasy1022/fantasy1022/FancyTrendView/images/download.svg?version=v0.8.1) ](https://bintray.com/fantasy1022/fantasy1022/FancyTrendView/v0.8.1/link)
+[ ![Download](https://api.bintray.com/packages/fantasy1022/maven/FancyTrendView/images/download.svg?version=0.8.2) ](https://bintray.com/fantasy1022/maven/FancyTrendView/0.8.2/link)
 [![Build Status](https://travis-ci.org/fantasy1022/FancyTrendView.svg?branch=master)](https://travis-ci.org/fantasy1022/FancyTrendView)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1cbed3bc8a6f416a9ddb9da965d567a6)](https://www.codacy.com/app/fantasy1022/FancyTrendView?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fantasy1022/FancyTrendView&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/fantasy1022/FancyTrendView/blob/master/LICENSE)
@@ -12,7 +12,7 @@ The behavior of Android APP is like Google trend web. https://trends.google.com/
 ![Screenshots gif](https://raw.githubusercontent.com/fantasy1022/FancyTrendView/master/art/showcase.gif)
 
 
-# Sample project 
+# Sample project
 You can download the latest sample APK from this repo here: https://github.com/fantasy1022/FancyTrendView/blob/master/sample.apk
 
 It's also on Google Play:
@@ -32,22 +32,22 @@ It's also on Google Play:
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.fantasy1022.fancytrendview:0.8.1'
+    compile 'com.fantasy1022.fancytrendview:library:0.8.2'
 }
 ```
 
 # How to use
 
-## XML 
+## XML
 ```xml
     <com.fantasy1022.fancytrendview.FancyTrendView
         android:id="@+id/googleTrendView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:colorArray="@array/trendcolors"
-        app:cursorBlinkInterval="300" 
+        app:cursorBlinkInterval="300"
         app:cursorBlinkTimesAfterTypeDone="10"
-        app:cursorWidth="3dp" 
+        app:cursorWidth="3dp"
         app:flipDirection="random"
         app:flipSpeed="1000"
         app:textArray="@array/demoTrendArray"
@@ -124,7 +124,7 @@ app:textChangeType="random" //random, increase, decrease
 ```
 
 ### textSize
-This attribute indicates text size 
+This attribute indicates text size
 ```xml
  app:textSize="10sp"
 ```
@@ -134,4 +134,3 @@ This attribute indicates the interval between two character.
 ```xml
 app:typedSpeed="200" //ms
 ```
-
