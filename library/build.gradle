@@ -43,9 +43,9 @@ dependencies {
 }
 
 version = rootProject.ext.versionName
-def siteUrl = 'https://github.com/fantasy1022/FancyTrendView'   // 项目的主页
-def gitUrl = 'https://github.com/fantasy1022/FancyTrendView.git'   // Git仓库的url
-group = "com.fantasy1022.fancytrendview"            // Maven Group ID for the artifact，一般填你唯一的包名
+def siteUrl = 'https://github.com/fantasy1022/FancyTrendView'
+def gitUrl = 'https://github.com/fantasy1022/FancyTrendView.git'
+group = "com.fantasy1022.fancytrendview"
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -53,7 +53,7 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'he custom UI view including animation and typing text.'     //项目的描述 你可以多写一点
+                name 'he custom UI view including animation and typing text.'
                 url siteUrl
                 // Set your license
                 licenses {
@@ -64,7 +64,7 @@ install {
                 }
                 developers {
                     developer {
-                        id 'fantasy1022'        //填写的一些基本信息
+                        id 'fantasy1022'
                         name 'Fantasy Fang'
                         email 'fantasy-1022@hotmail.com'
                     }
@@ -94,20 +94,26 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "FancyTrendView"    //发布到JCenter上的项目名字
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
+
+def folder = new File('local.properties')
+if (folder.exists()) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    bintray {
+        user = hasProperty("bintray.user") ? "" : properties.getProperty("bintray.user")
+        key = hasProperty("bintray.apikey") ? "" : properties.getProperty("bintray.apikey")
+        configurations = ['archives']
+        pkg {
+            repo = "maven"
+            name = "FancyTrendView"
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            licenses = ["Apache-2.0"]
+            publish = true
+        }
     }
+
 }
+
 
 
