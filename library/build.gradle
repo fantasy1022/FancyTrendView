@@ -96,7 +96,7 @@ artifacts {
 }
 
 def folder = new File('local.properties')
-if (!folder.exists()) {
+if (folder.exists()) {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     bintray {
