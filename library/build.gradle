@@ -94,22 +94,26 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = hasProperty("bintray.user") ? "" : properties.getProperty("bintray.user")
-    key = hasProperty("bintray.apikey") ? "" : properties.getProperty("bintray.apikey")
-//    user = properties.getProperty("bintray.user")
-//    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "FancyTrendView"
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
+
+def folder = new File('local.properties')
+if (!folder.exists()) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    bintray {
+        user = hasProperty("bintray.user") ? "" : properties.getProperty("bintray.user")
+        key = hasProperty("bintray.apikey") ? "" : properties.getProperty("bintray.apikey")
+        configurations = ['archives']
+        pkg {
+            repo = "maven"
+            name = "FancyTrendView"
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            licenses = ["Apache-2.0"]
+            publish = true
+        }
     }
+
 }
+
 
 
