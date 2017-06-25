@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.fantasy1022.googletrendapp.com.fantasy1022.googletrendapp.presentation.trend.GoogleTrendActivity">
+    tools:context=".presentation.trend.FancyTrendActivity">
 
 
     <android.support.v7.widget.RecyclerView

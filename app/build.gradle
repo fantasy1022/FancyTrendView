@@ -17,6 +17,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'spoon'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.frogermcs.androiddevmetrics'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -158,5 +159,7 @@ dependencies {
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
 
-
+    //Dagger2
+    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 }
