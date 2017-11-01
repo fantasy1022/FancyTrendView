@@ -16,7 +16,6 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'spoon'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -47,11 +46,13 @@ android {
         warningsAsErrors true
         xmlReport false
     }
+    flavorDimensions "product"
     productFlavors {
         prod {
-
+            dimension "product"
         }
         mock {
+            dimension "product"
             applicationIdSuffix ".mock"
         }
     }
@@ -65,10 +66,11 @@ android {
     }
 
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(
-                    output.outputFile.parent,
-                    output.outputFile.name.replace("app-prod-release.apk", "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"))
+        variant.outputs.all {
+            outputFileName = "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"
+//            output.outputFile = new File(
+//                    output.outputFile.parent,
+//                    output.outputFile.name.replace("app-prod-release.apk", "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"))
         }
     }
 
