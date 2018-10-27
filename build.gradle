@@ -37,7 +37,7 @@ ext {
     compileSdkVersion = 28
     buildToolsVersion = '28.0.3'
     versionCode = 4
-    versionName = '0.8.2'
+    versionName = '1.0.0'
 
     // Library
     libMinSdkVersion = 15
