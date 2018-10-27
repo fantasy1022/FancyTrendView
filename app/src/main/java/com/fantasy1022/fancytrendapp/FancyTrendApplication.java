@@ -18,13 +18,24 @@ package com.fantasy1022.fancytrendapp;
 
 import android.app.Application;
 
+import com.fantasy1022.fancytrendapp.common.SPUtils;
+import com.fantasy1022.fancytrendapp.injection.FancyTrendComponent;
+import com.fantasy1022.fancytrendapp.injection.FancyTrendPresenterModule;
+import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
 import com.squareup.leakcanary.LeakCanary;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by fantasy1022 on 2017/3/15.
  */
 
 public class FancyTrendApplication extends Application {
+
+    FancyTrendComponent fancyTrendComponent;
+    AppComponent appComponent;
+
 
     @Override
     public void onCreate() {
@@ -35,5 +46,19 @@ public class FancyTrendApplication extends Application {
             return;
         }
         LeakCanary.install(this);
+
+
+        if (BuildConfig.DEBUG) {
+            AndroidDevMetrics.initWith(this);
+        }
+
+        appComponent = DaggerAppComponent.builder()
+                .build();
+
+        fancyTrendComponent = appComponent.plus(new FancyTrendPresenterModule(Schedulers.io(), AndroidSchedulers.mainThread(),new SPUtils(this)));
+    }
+
+    public FancyTrendComponent getFancyTrendComponent() {
+        return fancyTrendComponent;
     }
 }

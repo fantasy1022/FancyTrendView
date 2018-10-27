@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.fantasy1022.fancytrendapp.FancyTrendApplication;
 import com.fantasy1022.fancytrendapp.R;
 import com.fantasy1022.fancytrendapp.common.Constant;
 import com.fantasy1022.fancytrendapp.common.GridType;
@@ -43,6 +44,8 @@ import com.fantasy1022.fancytrendapp.injection.Injection;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +62,8 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
     @BindView(R.id.noTrendInfoTxt)
     TextView noTrendInfoTxt;
     View decorView;
-
-    private FancyTrendContract.Presenter fancyTrendPresenter;
+    @Inject
+    FancyTrendContract.Presenter fancyTrendPresenter;
     private FancyTrendAdapter googleTrendAdapter;
     private ArrayList<List<String>> trendItemList;
     private String[] countries;
@@ -134,7 +137,7 @@ public class FancyTrendActivity extends AppCompatActivity implements FancyTrendC
         setContentView(R.layout.activity_google_trend);
         decorView = getWindow().getDecorView();
         ButterKnife.bind(this);
-        fancyTrendPresenter = new FancyTrendPresenter(new SPUtils(this), Injection.provideTrendRepo(), Schedulers.io(), AndroidSchedulers.mainThread());
+        ((FancyTrendApplication) getApplication()).getFancyTrendComponent().inject(this);
         fancyTrendPresenter.attachView(this);
         fancyTrendPresenter.generateCountryCodeMapping();
         mVisible = true;
