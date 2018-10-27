@@ -17,6 +17,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'spoon'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.frogermcs.androiddevmetrics'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -47,11 +48,14 @@ android {
         warningsAsErrors true
         xmlReport false
     }
+
+    flavorDimensions "type"
     productFlavors {
         prod {
-
+            dimension "type"
         }
         mock {
+            dimension "type"
             applicationIdSuffix ".mock"
         }
     }
@@ -65,10 +69,11 @@ android {
     }
 
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(
-                    output.outputFile.parent,
-                    output.outputFile.name.replace("app-prod-release.apk", "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"))
+        variant.outputs.all {
+            outputFileName = "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"
+//            output.outputFile = new File(
+//                    output.outputFile.parent,
+//                    output.outputFile.name.replace("app-prod-release.apk", "FancyTrendView_Production-V" + defaultConfig.versionName + "-build#" + defaultConfig.versionCode + ".apk"))
         }
     }
 
@@ -162,7 +167,13 @@ dependencies {
     compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
     compile "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
 
+    //Dagger2
+    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
+    configurations.all {
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'
