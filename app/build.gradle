@@ -18,6 +18,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'spoon'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.frogermcs.androiddevmetrics'
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -164,8 +166,9 @@ dependencies {
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
     
     //Firebase
-    compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
-    compile "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
+    implementation "com.google.firebase:firebase-core:$rootProject.firebaseCoreVersion"
+    implementation "com.crashlytics.sdk.android:crashlytics:$rootProject.firebaseCrashlyticsVersion"
+    implementation "com.google.firebase:firebase-perf:$rootProject.firebasePerfomanceVersion"
 
     //Dagger2
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"

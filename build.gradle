@@ -5,15 +5,20 @@ buildscript {
         jcenter()
         mavenCentral()
         google()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
     dependencies {
-        classpath 'com.google.gms:google-services:3.2.0'
+        classpath 'com.google.gms:google-services:4.1.0'
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:1.2.2'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.frogermcs.androiddevmetrics:androiddevmetrics-plugin:0.4'
+        classpath 'io.fabric.tools:gradle:1.25.4'
+        classpath 'com.google.firebase:firebase-plugins:1.1.5'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -63,7 +68,9 @@ ext {
     spoonCompactVersion = '1.0.4'
     uiautomatorVersion = '2.1.2'
     leakcanaryVersion = '1.5'
-    firebaseVersion = '10.2.1'
+    firebaseCoreVersion = '16.0.4'
+    firebaseCrashlyticsVersion = '2.9.5'
+    firebasePerfomanceVersion = '16.2.0'
     dagger2Version = '2.11'
 
 }
