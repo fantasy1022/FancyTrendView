@@ -121,7 +121,7 @@ public class FancyTrendPresenter extends BasePresenter<FancyTrendContract.View> 
                 .subscribe(trendArrayMap -> {
                     Log.d(TAG, "Get trend result successful");
                     FancyTrendPresenter.this.trendArrayMap = trendArrayMap;
-                    getView().showTrendResult(trendArrayMap.get(getDefaultCountryCode()));
+                    getView().showTrendResult(trendArrayMap.get("taiwan"));//Taiwan
                 }, throwable -> {
                     Log.d(TAG, "Get trend result failure");
                     getView().showErrorScreen();

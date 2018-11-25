@@ -30,6 +30,6 @@ import retrofit2.http.GET;
 
 public interface FancyTrendRestService {
 
-    @GET("/api/terms/")
+    @GET("internal/data")
     Single<ArrayMap<String, List<String>>> getGoogleTrend();
 }

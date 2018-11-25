@@ -26,8 +26,8 @@ import java.util.List;
  */
 
 public class Constant {
-    public final static String GOOGLE_TREND_BASE_URL = "http://hawttrends.appspot.com";
-    public final static String DEFAULT_COUNTRY_CODE = "12";//Taiwan
+    public final static String GOOGLE_TREND_BASE_URL = "https://trends.google.com/trends/hottrends/visualize/";
+    public final static String DEFAULT_COUNTRY_CODE = "12";//Taiwan //TODO: remove
     public final static String SP_DEFAULT_COUNTRY_KEY = "SP_DEFAULT_COUNTRY_KEY";
     public final static String SP_DEFAULT_COUNTRY_INDEX_KEY = "SP_DEFAULT_COUNTRY_INDEX_KEY";
     public final static String SP_DEFAULT_CLICK_BEHAVIOR_KEY = "SP_DEFAULT_CLICK_BEHAVIOR_KEY";
