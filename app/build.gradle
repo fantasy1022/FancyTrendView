@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'spoon'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.frogermcs.androiddevmetrics'
@@ -98,6 +99,7 @@ dependencies {
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
     compile "com.android.support:transition:$rootProject.supportLibraryVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //Retrofit2
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
