@@ -49,8 +49,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+
 
 
 public class FancyTrendActivity extends AppCompatActivity implements FancyTrendContract.View {

@@ -16,6 +16,8 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'spoon'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -118,7 +120,7 @@ dependencies {
 
     //Tool
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+    kapt "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
 
     //UI
     compile "com.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion"
@@ -166,7 +168,7 @@ dependencies {
 
     //Dagger2
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
     configurations.all {
         exclude group: 'com.android.support', module: 'support-v13'
