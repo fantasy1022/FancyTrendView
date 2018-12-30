@@ -21,8 +21,7 @@ import android.app.Application;
 import com.fantasy1022.fancytrendapp.common.SPUtils;
 import com.fantasy1022.fancytrendapp.injection.FancyTrendComponent;
 import com.fantasy1022.fancytrendapp.injection.FancyTrendPresenterModule;
-import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
-import com.squareup.leakcanary.LeakCanary;
+
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -40,18 +39,6 @@ public class FancyTrendApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
-
-
-        if (BuildConfig.DEBUG) {
-            AndroidDevMetrics.initWith(this);
-        }
-
         appComponent = DaggerAppComponent.builder()
                 .build();
 
