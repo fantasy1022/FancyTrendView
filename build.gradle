@@ -51,7 +51,7 @@ ext {
     rxAndroidVersion = '2.1.0'
     okhttp3Version = '3.6.0'
     gsonVersion = '2.7'
-    butterknifeVersion = '8.5.1'
+    butterknifeVersion = '8.8.1'
     materialDialogsVersion = '0.9.3.0'
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'
