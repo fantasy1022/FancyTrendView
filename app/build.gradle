@@ -118,10 +118,6 @@ dependencies {
 
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
 
-    //Tool
-    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
-    kapt "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
-
     //UI
     compile "com.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion"
 
