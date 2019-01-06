@@ -40,14 +40,13 @@ import javax.inject.Inject
 
 
 class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
-
     val TAG = javaClass.simpleName
 
     lateinit var decorView: View
     @Inject
     lateinit var fancyTrendPresenter: FancyTrendContract.Presenter
     private lateinit var googleTrendAdapter: FancyTrendAdapter
-    private var trendItemList: ArrayList<List<String>>? = null
+    private var trendItemList: MutableList<List<String>> = mutableListOf()
     private var countries: Array<String>? = null
     private val mHideHandler = Handler()
     private val mHidePart2Runnable = Runnable {
@@ -101,29 +100,31 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
     }
 
     private fun setUpRecyclerView() {
-
-        googleTrendAdapter = FancyTrendAdapter(this, trendItemList, Constant.DEFAULT_ROW_NUMBER, FancyTrendAdapter.OnItemClickListener { v, trend, position ->
-            if (!isVisibleContent) {
-                this@FancyTrendActivity.toggle()
-                this@FancyTrendActivity.delayedHide(AUTO_HIDE_DELAY_MILLIS)
-            } else {
-                if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehaviorItem.googleSearch) {
-                    //TODO:Use chrome tab to implement
-                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
-                    intent.putExtra(SearchManager.QUERY, trend)
-                    startActivity(intent)
-                } else if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehaviorItem.singlecountry) {
-                    MaterialDialog.Builder(this@FancyTrendActivity)
-                            .title(R.string.choose_country)
-                            .items(R.array.trend_country_name)
-                            .itemsCallback { _, _, _, text ->
-                                val code = Constant.getCountryCode(text.toString())
-                                fancyTrendPresenter!!.retrieveSingleTrend(code, position)
+        googleTrendAdapter = FancyTrendAdapter(this, trendItemList, Constant.DEFAULT_ROW_NUMBER,
+                object : FancyTrendAdapter.OnItemClickListener {
+                    override fun onItemClick(v: View, trend: String, position: Int) {
+                        if (!isVisibleContent) {
+                            this@FancyTrendActivity.toggle()
+                            this@FancyTrendActivity.delayedHide(AUTO_HIDE_DELAY_MILLIS)
+                        } else {
+                            if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehaviorItem.googleSearch) {
+                                //TODO:Use chrome tab to implement
+                                val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                                intent.putExtra(SearchManager.QUERY, trend)
+                                startActivity(intent)
+                            } else if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehaviorItem.singlecountry) {
+                                MaterialDialog.Builder(this@FancyTrendActivity)
+                                        .title(R.string.choose_country)
+                                        .items(R.array.trend_country_name)
+                                        .itemsCallback { _, _, _, text ->
+                                            val code = Constant.getCountryCode(text.toString())
+                                            fancyTrendPresenter!!.retrieveSingleTrend(code, position)
+                                        }
+                                        .show()
                             }
-                            .show()
-                }
-            }
-        })
+                        }
+                    }
+                })
         trendRecycleView.layoutManager = CustomGridLayoutManager(this, Constant.DEFAULT_COLUMN_NUMBER)
         trendRecycleView.adapter = googleTrendAdapter
         trendRecycleView.setHasFixedSize(true)
@@ -142,11 +143,10 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
         Log.d(TAG, "showTrendResult")
         trendItemList = ArrayList()//Init
         for (i in 0 until Constant.DEFAULT_TREND_ITEM_NUMBER) {
-            trendItemList!!.add(trendList)
+            trendItemList.add(trendList)
         }
         googleTrendAdapter.updateAllList(trendItemList)
         //  googleTrendAdapter.updateAllList(Injection.getMockTrendList());
-
     }
 
     override fun changeTrend(trendList: List<String>, position: Int) {
@@ -174,64 +174,65 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == R.id.gridNum) {
-            MaterialDialog.Builder(this@FancyTrendActivity)
-                    .title(R.string.choose_grid)
-                    .items(R.array.grid_item_name)
-                    .itemsCallback { dialog, view, which, text ->
-                        when (which) {
-                            GridType.GRID_1_PLUS_1//1*1 1 item
-                            -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 1)//1 column
-                                googleTrendAdapter.changeRowNumber(1)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_2_PLUS_1 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 1)//1 column
-                                googleTrendAdapter.changeRowNumber(2)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_3_PLUS_1 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 1)//1 column
-                                googleTrendAdapter.changeRowNumber(3)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_1_PLUS_2 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 2)
-                                googleTrendAdapter.changeRowNumber(1)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_2_PLUS_2 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 2)
-                                googleTrendAdapter.changeRowNumber(2)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_3_PLUS_2 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 2)
-                                googleTrendAdapter.changeRowNumber(3)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_1_PLUS_3 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 3)
-                                googleTrendAdapter.changeRowNumber(1)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_2_PLUS_3 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 3)
-                                googleTrendAdapter.changeRowNumber(2)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
-                            }
-                            GridType.GRID_3_PLUS_3 -> {
-                                trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 3)
-                                googleTrendAdapter.changeRowNumber(3)
-                                UiUtils.animateForViewGroupTransition(trendRecycleView)
+        when (id) {
+            R.id.gridNum -> {
+                MaterialDialog.Builder(this@FancyTrendActivity)
+                        .title(R.string.choose_grid)
+                        .items(R.array.grid_item_name)
+                        .itemsCallback { _, _, which, _ ->
+                            when (which) {
+                                GridType.GRID_1_PLUS_1//1*1 1 item
+                                -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 1)//1 column
+                                    googleTrendAdapter.changeRowNumber(1)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_2_PLUS_1 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 1)//1 column
+                                    googleTrendAdapter.changeRowNumber(2)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_3_PLUS_1 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 1)//1 column
+                                    googleTrendAdapter.changeRowNumber(3)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_1_PLUS_2 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 2)
+                                    googleTrendAdapter.changeRowNumber(1)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_2_PLUS_2 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 2)
+                                    googleTrendAdapter.changeRowNumber(2)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_3_PLUS_2 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 2)
+                                    googleTrendAdapter.changeRowNumber(3)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_1_PLUS_3 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 3)
+                                    googleTrendAdapter.changeRowNumber(1)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_2_PLUS_3 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 3)
+                                    googleTrendAdapter.changeRowNumber(2)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
+                                GridType.GRID_3_PLUS_3 -> {
+                                    trendRecycleView.layoutManager = CustomGridLayoutManager(this@FancyTrendActivity, 3)
+                                    googleTrendAdapter.changeRowNumber(3)
+                                    UiUtils.animateForViewGroupTransition(trendRecycleView)
+                                }
                             }
                         }
-                    }
-                    .show()
-            return true
-        } else if (id == R.id.defaultCountry) {
-            MaterialDialog.Builder(this@FancyTrendActivity)
+                        .show()
+                return true
+            }
+            R.id.defaultCountry -> MaterialDialog.Builder(this@FancyTrendActivity)
                     .title(R.string.choose_default_country)
                     .items(R.array.trend_country_name) //get
                     .itemsCallbackSingleChoice(fancyTrendPresenter!!.defaultCountryIndex) { dialog, itemView, which, text ->
@@ -247,8 +248,7 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
                     }
                     .positiveText(android.R.string.ok)
                     .show()
-        } else if (id == R.id.clickBehavior) {
-            MaterialDialog.Builder(this@FancyTrendActivity)
+            R.id.clickBehavior -> MaterialDialog.Builder(this@FancyTrendActivity)
                     .title(R.string.choose_click_behavior)
                     .items(R.array.click_behavior_item_name)
                     .itemsCallbackSingleChoice(fancyTrendPresenter!!.clickBehavior) { dialog, itemView, which, text ->
