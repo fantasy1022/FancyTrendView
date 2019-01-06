@@ -47,7 +47,7 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
     lateinit var fancyTrendPresenter: FancyTrendContract.Presenter
     private lateinit var googleTrendAdapter: FancyTrendAdapter
     private var trendItemList: MutableList<List<String>> = mutableListOf()
-    private var countries: Array<String>? = null
+    private lateinit var countries: Array<String>
     private val mHideHandler = Handler()
     private val mHidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
@@ -107,18 +107,18 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
                             this@FancyTrendActivity.toggle()
                             this@FancyTrendActivity.delayedHide(AUTO_HIDE_DELAY_MILLIS)
                         } else {
-                            if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehaviorItem.googleSearch) {
+                            if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehavior.GoogleSearch) {
                                 //TODO:Use chrome tab to implement
                                 val intent = Intent(Intent.ACTION_WEB_SEARCH)
                                 intent.putExtra(SearchManager.QUERY, trend)
                                 startActivity(intent)
-                            } else if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehaviorItem.singlecountry) {
+                            } else if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehavior.SingleCountry) {
                                 MaterialDialog.Builder(this@FancyTrendActivity)
                                         .title(R.string.choose_country)
                                         .items(R.array.trend_country_name)
                                         .itemsCallback { _, _, _, text ->
                                             val code = Constant.getCountryCode(text.toString())
-                                            fancyTrendPresenter!!.retrieveSingleTrend(code, position)
+                                            fancyTrendPresenter.retrieveSingleTrend(code, position)
                                         }
                                         .show()
                             }
@@ -235,11 +235,11 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
             R.id.defaultCountry -> MaterialDialog.Builder(this@FancyTrendActivity)
                     .title(R.string.choose_default_country)
                     .items(R.array.trend_country_name) //get
-                    .itemsCallbackSingleChoice(fancyTrendPresenter!!.defaultCountryIndex) { dialog, itemView, which, text ->
+                    .itemsCallbackSingleChoice(fancyTrendPresenter.defaultCountryIndex) { _, _, which, _ ->
                         Log.d(TAG, "onSelection:$which")
-                        val code = Constant.getCountryCode(countries!![which])
-                        fancyTrendPresenter!!.defaultCountryCode = code
-                        fancyTrendPresenter!!.defaultCountryIndex = which
+                        val code = Constant.getCountryCode(countries[which])
+                        fancyTrendPresenter.defaultCountryCode = code
+                        fancyTrendPresenter.defaultCountryIndex = which
                         for (i in 0 until Constant.DEFAULT_TREND_ITEM_NUMBER) {
                             fancyTrendPresenter!!.retrieveSingleTrend(code, i)
                         }
@@ -251,8 +251,11 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
             R.id.clickBehavior -> MaterialDialog.Builder(this@FancyTrendActivity)
                     .title(R.string.choose_click_behavior)
                     .items(R.array.click_behavior_item_name)
-                    .itemsCallbackSingleChoice(fancyTrendPresenter!!.clickBehavior) { dialog, itemView, which, text ->
-                        fancyTrendPresenter!!.clickBehavior = which
+                    .itemsCallbackSingleChoice(fancyTrendPresenter.clickBehavior.value) { dialog, itemView, which, text ->
+                        fancyTrendPresenter.clickBehavior = when (which) {
+                            0 -> SPUtils.ClickBehavior.GoogleSearch
+                            else -> SPUtils.ClickBehavior.SingleCountry
+                        }
                         true
                     }
                     .positiveText(android.R.string.ok)

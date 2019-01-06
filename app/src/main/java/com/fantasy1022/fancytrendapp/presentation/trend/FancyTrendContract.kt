@@ -16,6 +16,7 @@
 
 package com.fantasy1022.fancytrendapp.presentation.trend
 
+import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.presentation.base.MvpView
 import com.fantasy1022.fancytrendapp.presentation.base.MvpPresenter
 
@@ -27,47 +28,19 @@ interface FancyTrendContract {
 
     interface View : MvpView {
         fun showTrendResult(trendList: List<String>)
-
         fun changeTrend(trendList: List<String>, position: Int)
-
         fun showErrorScreen()
-
         fun showLoading()
-
         fun hideLoading()
     }
 
     interface Presenter : MvpPresenter<View> {
-
         var defaultCountryCode: String
-
         var defaultCountryIndex: Int
-
-        var clickBehavior: Int
+        var clickBehavior: SPUtils.ClickBehavior
         fun generateCountryCodeMapping()
-
         fun retrieveAllTrend()
-
         fun retrieveSingleTrend(countryCode: String, position: Int)
-
-
-//        void generateCountryCodeMapping();
-//
-//        String getDefaultCountryCode();
-//
-//        void setDefaultCountryCode(String code);
-//
-//        int getDefaultCountryIndex();
-//
-//        void setDefaultCountryIndex(int index);
-//
-//        int getClickBehavior();
-//
-//        void setClickBehavior(int index);
-//
-//        void retrieveAllTrend();
-//
-//        void retrieveSingleTrend(String countryCode, int position);
     }
 
 }

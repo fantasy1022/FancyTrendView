@@ -14,33 +14,33 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.common;
+package com.fantasy1022.fancytrendapp.common
 
 
-import android.support.transition.ChangeBounds;
-import android.support.transition.Fade;
-import android.support.transition.TransitionManager;
-import android.support.transition.TransitionSet;
+import android.support.transition.ChangeBounds
+import android.support.transition.Fade
+import android.support.transition.TransitionManager
+import android.support.transition.TransitionSet
 
-import android.view.ViewGroup;
+import android.view.ViewGroup
 
 /**
  * Created by fantasy1022 on 2017/2/22.
  */
 
-public class UiUtils {
+object UiUtils {
 
-    public static void animateForViewGroupTransition(ViewGroup viewGroup) {
-        ChangeBounds changeBounds = new ChangeBounds();
-        Fade fadeOut = new Fade(Fade.OUT);
-        Fade fadeIn = new Fade(Fade.IN);
-        TransitionSet transition = new TransitionSet();
-        transition.setOrdering(TransitionSet.ORDERING_TOGETHER);
+    fun animateForViewGroupTransition(viewGroup: ViewGroup) {
+        val changeBounds = ChangeBounds()
+        val fadeOut = Fade(Fade.OUT)
+        val fadeIn = Fade(Fade.IN)
+        val transition = TransitionSet()
+        transition.ordering = TransitionSet.ORDERING_TOGETHER
         transition.addTransition(fadeOut)
                 .addTransition(changeBounds)
-                .addTransition(fadeIn);
+                .addTransition(fadeIn)
 
-        TransitionManager.beginDelayedTransition(viewGroup);
+        TransitionManager.beginDelayedTransition(viewGroup)
     }
 
 }
