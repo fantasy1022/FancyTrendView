@@ -89,18 +89,18 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
     override fun retrieveAllTrend() {
         checkViewAttached()
         addSubscription(trendRepository.allTrend
-                .doOnSubscribe { a -> view.showLoading() }
-                .doFinally { view.hideLoading() }
+                .doOnSubscribe { view?.showLoading() }
+                .doFinally { view?.hideLoading() }
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe({ trendArrayMap ->
                     Log.d(TAG, "Get trend result successful")
                     this@FancyTrendPresenter.trendArrayMap = trendArrayMap
                     //TODO:Use last choice
-                    view.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())//Taiwan
+                    view?.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())//Taiwan
                 }, {
                     Log.d(TAG, "Get trend result failure")
-                    view.showErrorScreen()
+                    view?.showErrorScreen()
                 }))
     }
 
@@ -109,7 +109,7 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
         val rr = trendArrayMap["12"]
         //讀完collection，再來改
         trendArrayMap?.let {
-            view.changeTrend(rr ?: emptyList(), position)
+            view?.changeTrend(rr ?: emptyList(), position)
         }
     }
 }

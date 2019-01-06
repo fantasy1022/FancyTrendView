@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.presentation.base;
+package com.fantasy1022.fancytrendapp.presentation.base
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
-public interface MvpPresenter<V extends MvpView> {
+interface MvpPresenter<V : MvpView> {
 
-    void attachView(V mvpView);
+    fun attachView(mvpView: V)
 
-    void detachView();
+    fun detachView()
 }
