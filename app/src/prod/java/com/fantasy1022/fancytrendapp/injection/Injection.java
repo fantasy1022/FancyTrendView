@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class Injection {
-    private static final String BASE_URL = Constant.GOOGLE_TREND_BASE_URL;
+    private static final String BASE_URL = Constant.INSTANCE.GOOGLE_TREND_BASE_URL;
     private static OkHttpClient okHttpClient;
     private static FancyTrendRestService fancyTrendRestService;
     private static Retrofit retrofitInstance;
@@ -88,7 +88,7 @@ public class Injection {
     public static void getTrendUsingOkhttp() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Constant.GOOGLE_TREND_BASE_URL + "/api/terms/")
+                .url(Constant.INSTANCE.GOOGLE_TREND_BASE_URL + "/api/terms/")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -99,7 +99,8 @@ public class Injection {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Gson gson = new Gson();
-                Type trendMapType = new TypeToken<ArrayMap<String, ArrayList<String>>>() {}.getType();
+                Type trendMapType = new TypeToken<ArrayMap<String, ArrayList<String>>>() {
+                }.getType();
                 ArrayMap<String, ArrayList<String>> map = gson.fromJson(response.body().string(), trendMapType);
             }
         });

@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetworkModule {
-    private static final String BASE_URL = Constant.GOOGLE_TREND_BASE_URL;
+    private static final String BASE_URL = Constant.INSTANCE.GOOGLE_TREND_BASE_URL;
     private static ArrayMap<String, String> countryMap;
 
     @Provides
@@ -78,7 +78,7 @@ public class NetworkModule {
     public static void getTrendUsingOkhttp() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Constant.GOOGLE_TREND_BASE_URL + "/api/terms/")
+                .url(Constant.INSTANCE.INSTANCE.GOOGLE_TREND_BASE_URL + "/api/terms/")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
