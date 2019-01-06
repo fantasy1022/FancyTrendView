@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.data;
+package com.fantasy1022.fancytrendapp.data
 
-import android.support.v4.util.ArrayMap;
+import android.support.v4.util.ArrayMap
 
+import com.fantasy1022.fancytrendapp.data.remote.FancyTrendRestService
+import java.util.concurrent.TimeUnit
 
-import java.util.List;
+import io.reactivex.Single
 
-import io.reactivex.Single;
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
-public interface TrendRepository {
+class TrendRepositoryImpl(private val googleTrendRestService: FancyTrendRestService) : TrendRepository {
 
-    Single<ArrayMap<String, List<String>>> getAllTrend();
+    override//TODO:Check  Retry mechanisms, backoff mechanisms and error handling
+    val allTrend: Single<ArrayMap<String, List<String>>>
+        get() = Single.defer { googleTrendRestService.googleTrend }
+                .retry(1)
+                .timeout(3, TimeUnit.SECONDS)
+
 }

@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.data.remote;
+package com.fantasy1022.fancytrendapp.data
 
+import android.support.v4.util.ArrayMap
 
-import android.support.v4.util.ArrayMap;
-
-import java.util.List;
-
-import io.reactivex.Single;
-import retrofit2.http.GET;
+import io.reactivex.Single
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
-public interface FancyTrendRestService {
+interface TrendRepository {
 
-    @GET("internal/data")
-    Single<ArrayMap<String, List<String>>> getGoogleTrend();
+    val allTrend: Single<ArrayMap<String, List<String>>>
 }
