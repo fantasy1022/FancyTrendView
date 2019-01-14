@@ -17,7 +17,6 @@
 package com.fantasy1022.fancytrendapp.data
 
 import android.support.v4.util.ArrayMap
-
 import io.reactivex.Single
 
 /**
@@ -27,4 +26,6 @@ import io.reactivex.Single
 interface TrendRepository {
 
     val allTrend: Single<ArrayMap<String, List<String>>>
+
+    suspend fun getAllTrendCoroutine(): Map<String, List<String>>
 }

@@ -16,6 +16,7 @@
 
 package com.fantasy1022.fancytrendapp.presentation.trend
 
+import android.arch.lifecycle.LiveData
 import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.presentation.base.MvpView
 import com.fantasy1022.fancytrendapp.presentation.base.MvpPresenter
@@ -41,6 +42,7 @@ interface FancyTrendContract {
         fun generateCountryCodeMapping()
         fun retrieveAllTrend()
         fun retrieveSingleTrend(countryCode: String, position: Int)
+        fun cancelJob()
     }
 
 }

@@ -9,7 +9,7 @@ import com.fantasy1022.fancytrendapp.data.TrendRepositoryImpl;
 import com.fantasy1022.fancytrendapp.data.remote.FancyTrendRestService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -32,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by fantasy_apple on 2017/6/25.
  */
 
+//TODO:Change to Kotlin
 @Module
 public class NetworkModule {
     private static final String BASE_URL = Constant.INSTANCE.GOOGLE_TREND_BASE_URL;
@@ -49,11 +50,21 @@ public class NetworkModule {
         return googleTrendRestService;
     }
 
+    //TODO:Remove
+//    @Provides
+//    public static Retrofit getRetrofitInstance(OkHttpClient okHttpClient) {
+//        Retrofit retrofit = new Retrofit.Builder().client(okHttpClient).baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .build();
+//        return retrofit;
+//    }
+
     @Provides
-    public static Retrofit getRetrofitInstance(OkHttpClient okHttpClient) {
+    public static Retrofit getRetrofitInstanceForCoroutine(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder().client(okHttpClient).baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory.create())
                 .build();
         return retrofit;
     }
@@ -72,7 +83,6 @@ public class NetworkModule {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return interceptor;
     }
-
 
     //For test using gson to transform response
     public static void getTrendUsingOkhttp() {

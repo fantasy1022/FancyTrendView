@@ -17,14 +17,13 @@
 package com.fantasy1022.fancytrendapp.presentation.trend
 
 import android.util.Log
-
 import com.fantasy1022.fancytrendapp.common.Constant
 import com.fantasy1022.fancytrendapp.common.SPUtils
-import com.fantasy1022.fancytrendapp.presentation.base.BasePresenter
 import com.fantasy1022.fancytrendapp.data.TrendRepository
-import java.util.Locale
-
+import com.fantasy1022.fancytrendapp.presentation.base.BasePresenter
 import io.reactivex.Scheduler
+import kotlinx.coroutines.*
+import java.util.*
 
 /**
  * Created by fantasy1022 on 2017/2/7.
@@ -35,7 +34,7 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
     : BasePresenter<FancyTrendContract.View>(), FancyTrendContract.Presenter {
     private val TAG = javaClass.simpleName
     private var trendArrayMap: Map<String, List<String>> = emptyMap()
-
+    private var myJob: Job? = null
 
     override var defaultCountryCode: String
         get() {
@@ -96,20 +95,32 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
 
     override fun retrieveAllTrend() {
         checkViewAttached()
-        addSubscription(trendRepository.allTrend
-                .doOnSubscribe { view?.showLoading() }
-                .doFinally { view?.hideLoading() }
-                .subscribeOn(ioScheduler)
-                .observeOn(mainScheduler)
-                .subscribe({ trendArrayMap ->
-                    Log.d(TAG, "Get trend result successful")
-                    this@FancyTrendPresenter.trendArrayMap = trendArrayMap
-                    //TODO:Use last choice
-                    view?.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())//Taiwan
-                }, {
-                    Log.d(TAG, "Get trend result failure")
-                    view?.showErrorScreen()
-                }))
+
+        myJob = CoroutineScope(Dispatchers.IO).launch {
+            val result = trendRepository.getAllTrendCoroutine()
+            withContext(Dispatchers.Main) {
+                Log.d(TAG, "Get trend result successful")
+                this@FancyTrendPresenter.trendArrayMap = result
+                view?.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())
+            }
+        }
+//        addSubscription(trendRepository.allTrend
+//                .doOnSubscribe { view?.showLoading() }
+//                .doFinally { view?.hideLoading() }
+//                .subscribeOn(ioScheduler)
+//                .observeOn(mainScheduler)
+//                .subscribe({ trendArrayMap ->
+//                    Log.d(TAG, "Get trend result successful")
+//                    this@FancyTrendPresenter.trendArrayMap = trendArrayMap
+//                    //TODO:Use last choice
+//                    view?.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())//Taiwan
+//                }, {
+//                    Log.d(TAG, "Get trend result failure")
+//                    view?.showErrorScreen()
+//                }))
+//        uiScope.launch {
+//            trendRepository.getAllTrendNew()
+//        }
     }
 
     override fun retrieveSingleTrend(countryCode: String, position: Int) {
@@ -119,5 +130,9 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
         trendArrayMap?.let {
             view?.changeTrend(rr ?: emptyList(), position)
         }
+    }
+
+    override fun cancelJob() {
+        myJob?.cancel()
     }
 }

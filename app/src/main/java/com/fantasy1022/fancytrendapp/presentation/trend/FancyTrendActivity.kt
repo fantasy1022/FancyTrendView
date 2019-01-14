@@ -35,6 +35,7 @@ import com.fantasy1022.fancytrendapp.common.GridType
 import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.common.UiUtils
 import kotlinx.android.synthetic.main.activity_google_trend.*
+import kotlinx.coroutines.Job
 import java.util.*
 import javax.inject.Inject
 
@@ -97,6 +98,13 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
         countries = resources.getStringArray(R.array.trend_country_name)
         setUpRecyclerView()
         fancyTrendPresenter.retrieveAllTrend()
+
+//        fancyTrendPresenter.allTrend?.observe(this, android.arch.lifecycle.Observer { value ->
+//            value?.let {
+//                showTrendResult(it["taiwan"]?.toList() ?: emptyList())
+//            }
+//
+//        })
     }
 
     private fun setUpRecyclerView() {
@@ -311,6 +319,7 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
 
     override fun onDestroy() {
         Log.d(TAG, "onDestroy")
+        fancyTrendPresenter.cancelJob()
         super.onDestroy()
     }
 
