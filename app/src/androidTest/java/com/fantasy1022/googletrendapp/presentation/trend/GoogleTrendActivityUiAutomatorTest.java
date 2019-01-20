@@ -53,7 +53,7 @@ import static org.junit.Assert.assertThat;
 public class GoogleTrendActivityUiAutomatorTest {
     public final static String TAG = GoogleTrendActivityUiAutomatorTest.class.getSimpleName();
 
-    private static final String BASIC_PACKAGE = "com.fantasyfang.googletrendapp";//Package name
+    private static final String BASIC_PACKAGE = "com.fantasy1022.fancytrendapp";//Package name
 
     private static final String SETTING_PACKAGE = "com.android.settings";
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -106,11 +106,12 @@ public class GoogleTrendActivityUiAutomatorTest {
 
     @Test
     public void mainActivity_RecycleViewChangeCountry() throws Exception {
-        UiScrollable recycleView = new UiScrollable(new UiSelector().resourceId("com.fantasyfang.googletrendapp:id/trendRecycleView")
+        UiScrollable recycleView = new UiScrollable(new UiSelector().resourceId(BASIC_PACKAGE + ":id/trendRecycleView")
                 .className(RecyclerView.class));//recycleView.click();
-        UiObject item = recycleView.getChild(new UiSelector().resourceId("com.fantasyfang.googletrendapp:id/googleTrendView"));
+        UiObject item = recycleView.getChild(new UiSelector().resourceId(BASIC_PACKAGE + ":id/googleTrendView"));
         item.click();
         item.click();
+
         mDevice.waitForIdle();
         takeScreenShot("Country_menu_page.jpg");
     }
@@ -124,9 +125,9 @@ public class GoogleTrendActivityUiAutomatorTest {
 
     @Test
     public void mainActivity_changeLanguageToEnglish() throws Exception {
-        UiScrollable recycleView = new UiScrollable(new UiSelector().resourceId("com.fantasyfang.googletrendapp:id/trendRecycleView")
+        UiScrollable recycleView = new UiScrollable(new UiSelector().resourceId(BASIC_PACKAGE + ":id/trendRecycleView")
                 .className(RecyclerView.class));//recycleView.click();
-        UiObject item = recycleView.getChild(new UiSelector().resourceId("com.fantasyfang.googletrendapp:id/googleTrendView"));
+        UiObject item = recycleView.getChild(new UiSelector().resourceId(BASIC_PACKAGE + ":id/googleTrendView"));
         item.click();
         item.click();
         mDevice.waitForIdle();
@@ -141,7 +142,7 @@ public class GoogleTrendActivityUiAutomatorTest {
 
         mDevice.wait(Until.hasObject(By.pkg(SETTING_PACKAGE).depth(0)), LAUNCH_TIMEOUT);
 
-        if(selectSettingsFor("語言與輸入設定")){
+        if (selectSettingsFor("語言與輸入設定")) {
             UiObject language = mDevice.findObject(new UiSelector().text("語言"));
             language.click();
 
@@ -179,7 +180,7 @@ public class GoogleTrendActivityUiAutomatorTest {
 
     }
 
-    private boolean selectSettingsFor(String name)  {
+    private boolean selectSettingsFor(String name) {
         try {
             UiScrollable appsSettingsList = new UiScrollable(SettingsHelper.SCROLL_VIEW);
             UiObject obj = appsSettingsList.getChildByText(SettingsHelper.LIST_VIEW_ITEM, name);
@@ -192,9 +193,9 @@ public class GoogleTrendActivityUiAutomatorTest {
 
     @Test
     public void mainActivity_changeGridSize() throws Exception {
-        UiScrollable recycleView = new UiScrollable(new UiSelector().resourceId("com.fantasyfang.googletrendapp:id/trendRecycleView")
+        UiScrollable recycleView = new UiScrollable(new UiSelector().resourceId(BASIC_PACKAGE + ":id/trendRecycleView")
                 .className(RecyclerView.class));//recycleView.click();
-        UiObject item = recycleView.getChild(new UiSelector().resourceId("com.fantasyfang.googletrendapp:id/googleTrendView"));
+        UiObject item = recycleView.getChild(new UiSelector().resourceId(BASIC_PACKAGE + ":id/googleTrendView"));
         item.click();
 
         String gridDescription = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.choose_grid);

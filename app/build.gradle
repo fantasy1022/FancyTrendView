@@ -162,7 +162,11 @@ dependencies {
     androidTestCompile "com.jraska:falcon-spoon-compat:$rootProject.spoonCompactVersion"
 
     // UiAutomator
-    androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:$rootProject.uiautomatorVersion"
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:$rootProject.uiautomatorVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
 
     //Leakcanary
 //    debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanaryVersion"
