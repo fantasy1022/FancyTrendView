@@ -33,8 +33,15 @@ class TrendRepositoryImpl(private val googleTrendRestService: FancyTrendRestServ
                 .retry(1)
                 .timeout(3, TimeUnit.SECONDS)
 
-    override suspend fun getAllTrendCoroutine(): ArrayMap<String, List<String>> {
+    override suspend fun getAllTrendCoroutine(): Map<String, List<String>> {
         //TODO:Add result to db
-        return googleTrendRestService.googleTrendNew.await()
+        val trend = googleTrendRestService.googleTrendNew.await()
+
+        //TODO:1.Modify key to first char to Upper case.(StringExtension)
+        //EX: czech_republic" -> "Czech Republic"
+        return trend.map { it ->
+            it.key.replace("_", " ") to it.value
+        }.toMap()
+        //first().toUpperCase().toString()
     }
 }

@@ -25,7 +25,7 @@ import io.reactivex.Single
 
 interface TrendRepository {
 
-    val allTrend: Single<ArrayMap<String, List<String>>>
+    val allTrend: Single<ArrayMap<String, List<String>>>//TODO:remove
 
     suspend fun getAllTrendCoroutine(): Map<String, List<String>>
 }
