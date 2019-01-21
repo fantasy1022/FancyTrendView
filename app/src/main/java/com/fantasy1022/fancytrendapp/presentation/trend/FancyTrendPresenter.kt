@@ -101,7 +101,8 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
             withContext(Dispatchers.Main) {
                 Log.d(TAG, "Get trend result successful")
                 this@FancyTrendPresenter.trendArrayMap = result
-                view?.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())
+                //TODO:Change key
+                view?.showTrendResult(trendArrayMap["Taiwan"]?.toList() ?: emptyList())
             }
         }
 //        addSubscription(trendRepository.allTrend
@@ -125,6 +126,7 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
 
     override fun retrieveSingleTrend(countryCode: String, position: Int) {
         //Use init data to find countryCode and show
+        //TODO:Change Key
         val rr = trendArrayMap["12"]
         //讀完collection，再來改
         trendArrayMap?.let {

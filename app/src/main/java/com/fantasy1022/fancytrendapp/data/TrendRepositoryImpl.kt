@@ -17,6 +17,7 @@
 package com.fantasy1022.fancytrendapp.data
 
 import android.support.v4.util.ArrayMap
+import com.fantasy1022.fancytrendapp.common.modifyFirstCharToUpperCase
 import com.fantasy1022.fancytrendapp.data.remote.FancyTrendRestService
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
@@ -40,8 +41,7 @@ class TrendRepositoryImpl(private val googleTrendRestService: FancyTrendRestServ
         //TODO:1.Modify key to first char to Upper case.(StringExtension)
         //EX: czech_republic" -> "Czech Republic"
         return trend.map { it ->
-            it.key.replace("_", " ") to it.value
+            it.key.replace("_", " ").modifyFirstCharToUpperCase() to it.value
         }.toMap()
-        //first().toUpperCase().toString()
     }
 }
