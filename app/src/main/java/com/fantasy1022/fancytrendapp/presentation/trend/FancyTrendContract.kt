@@ -16,10 +16,9 @@
 
 package com.fantasy1022.fancytrendapp.presentation.trend
 
-import android.arch.lifecycle.LiveData
 import com.fantasy1022.fancytrendapp.common.SPUtils
-import com.fantasy1022.fancytrendapp.presentation.base.MvpView
 import com.fantasy1022.fancytrendapp.presentation.base.MvpPresenter
+import com.fantasy1022.fancytrendapp.presentation.base.MvpView
 
 /**
  * Created by fantasy1022 on 2017/2/7.
@@ -39,9 +38,9 @@ interface FancyTrendContract {
         var defaultCountryCode: String
         var defaultCountryIndex: Int
         var clickBehavior: SPUtils.ClickBehavior
-        fun generateCountryCodeMapping()
+        fun getAllCountryNames():List<String>
         fun retrieveAllTrend()
-        fun retrieveSingleTrend(countryCode: String, position: Int)
+        fun retrieveSingleTrend(countryName: String, position: Int)
         fun cancelJob()
     }
 

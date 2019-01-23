@@ -18,17 +18,13 @@ package com.fantasy1022.fancytrendapp.common
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.annotation.IntDef
-
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 
 /**
  * Created by fantasy_apple on 2017/4/3.
  */
 
 class SPUtils(context: Context) {
-    private val sp: SharedPreferences
+    private val sp: SharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor
 //
 //    @IntDef(ClickBehaviorItem.singlecountry, ClickBehaviorItem.googleSearch)
@@ -40,13 +36,11 @@ class SPUtils(context: Context) {
 //        }
 //    }
 
-    enum class ClickBehavior(val value:Int){
-        GoogleSearch(0),SingleCountry(1)
+    enum class ClickBehavior(val value: Int) {
+        GoogleSearch(0), SingleCountry(1)
     }
 
-
     init {
-        sp = context.getSharedPreferences("data", Context.MODE_PRIVATE)
         editor = sp.edit()
         editor.apply()
     }

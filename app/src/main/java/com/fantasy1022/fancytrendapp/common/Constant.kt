@@ -17,8 +17,7 @@
 package com.fantasy1022.fancytrendapp.common
 
 import android.support.v4.util.ArrayMap
-
-import java.util.Arrays
+import java.util.*
 
 /**
  * Created by fantasy1022 on 2017/2/8.
@@ -35,7 +34,7 @@ object Constant {
     const val DEFAULT_TREND_ITEM_NUMBER = DEFAULT_ROW_NUMBER * DEFAULT_COLUMN_NUMBER
     private lateinit var countryMap: MutableMap<String, String>
 
-
+    //TODO:Check test
     fun generateCountryCodeMapping() {
         //TODO:need remove
         countryMap = mutableMapOf()//(name,code)
@@ -88,10 +87,12 @@ object Constant {
         countryMap["Nigeria"] = "52"
     }
 
+    //TODO:Remove
     fun getCountryCode(countryName: String): String {
         return countryMap[countryName] ?: ""
     }
 
+    //TODO:Modify test data
     fun generateTrendMap(): ArrayMap<String, List<String>> {//For test and mock using
         val countryTrendMap = ArrayMap<String, List<String>>()
         countryTrendMap["1"] = Arrays.asList(*arrayOf("Powerball", "This Is Us", "Paul George"))

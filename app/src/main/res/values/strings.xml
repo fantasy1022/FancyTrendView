@@ -33,7 +33,7 @@
         <item>3*3</item>
     </string-array>
 
-
+   <!--TODO:Remove-->
     <string-array name="trend_country_name" translatable="false">
         <item>Argentina</item>
         <item>Australia</item>

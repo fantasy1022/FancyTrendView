@@ -89,10 +89,6 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
             }
         }
 
-    override fun generateCountryCodeMapping() {
-        Constant.generateCountryCodeMapping()
-    }
-
     override fun retrieveAllTrend() {
         checkViewAttached()
 
@@ -101,7 +97,7 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
             withContext(Dispatchers.Main) {
                 Log.d(TAG, "Get trend result successful")
                 this@FancyTrendPresenter.trendArrayMap = result
-                //TODO:Change key
+                //TODO:Get default key
                 view?.showTrendResult(trendArrayMap["Taiwan"]?.toList() ?: emptyList())
             }
         }
@@ -124,13 +120,11 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
 //        }
     }
 
-    override fun retrieveSingleTrend(countryCode: String, position: Int) {
-        //Use init data to find countryCode and show
-        //TODO:Change Key
-        val rr = trendArrayMap["12"]
-        //讀完collection，再來改
+    override fun getAllCountryNames(): List<String> = trendArrayMap.keys.toList().sorted()
+
+    override fun retrieveSingleTrend(countryName: String, position: Int) {
         trendArrayMap?.let {
-            view?.changeTrend(rr ?: emptyList(), position)
+            view?.changeTrend(it[countryName] ?: emptyList(), position)
         }
     }
 

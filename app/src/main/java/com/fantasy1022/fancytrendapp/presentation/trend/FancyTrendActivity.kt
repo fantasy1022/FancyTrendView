@@ -35,8 +35,6 @@ import com.fantasy1022.fancytrendapp.common.GridType
 import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.common.UiUtils
 import kotlinx.android.synthetic.main.activity_google_trend.*
-import kotlinx.coroutines.Job
-import java.util.*
 import javax.inject.Inject
 
 
@@ -48,7 +46,6 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
     lateinit var fancyTrendPresenter: FancyTrendContract.Presenter
     private lateinit var googleTrendAdapter: FancyTrendAdapter
     private var trendItemList: MutableList<List<String>> = mutableListOf()
-    private lateinit var countries: Array<String>
     private val mHideHandler = Handler()
     private val mHidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
@@ -93,18 +90,10 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
         decorView = window.decorView
         (application as FancyTrendApplication).fancyTrendComponent.inject(this)
         fancyTrendPresenter.attachView(this)
-        fancyTrendPresenter.generateCountryCodeMapping()
         isVisibleContent = true
-        countries = resources.getStringArray(R.array.trend_country_name)
         setUpRecyclerView()
+        //TODO:Show loading
         fancyTrendPresenter.retrieveAllTrend()
-
-//        fancyTrendPresenter.allTrend?.observe(this, android.arch.lifecycle.Observer { value ->
-//            value?.let {
-//                showTrendResult(it["taiwan"]?.toList() ?: emptyList())
-//            }
-//
-//        })
     }
 
     private fun setUpRecyclerView() {
@@ -123,10 +112,13 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
                             } else if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehavior.SingleCountry) {
                                 MaterialDialog.Builder(this@FancyTrendActivity)
                                         .title(R.string.choose_country)
-                                        .items(R.array.trend_country_name)
-                                        .itemsCallback { _, _, _, text ->
-                                            val code = Constant.getCountryCode(text.toString())
-                                            fancyTrendPresenter.retrieveSingleTrend(code, position)
+                                        .items(fancyTrendPresenter.getAllCountryNames())
+                                        .itemsCallback { _, _, position, _ ->
+                                            //TODO:Handle country
+//                                            fancyTrendPresenter.retrieveSingleTrend(fancyTrendPresenter.getAllCountryNames()[position], position)
+//                                            fancyTrendPresenter.getAllCountryNames()[position]
+//                                            val code = Constant.getCountryCode(text.toString())
+//                                            fancyTrendPresenter.retrieveSingleTrend(code, position)
                                         }
                                         .show()
                             }
@@ -149,7 +141,6 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
 
     override fun showTrendResult(trendList: List<String>) {
         Log.d(TAG, "showTrendResult")
-        trendItemList = ArrayList()//Init
         for (i in 0 until Constant.DEFAULT_TREND_ITEM_NUMBER) {
             trendItemList.add(trendList)
         }
@@ -242,16 +233,13 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
             }
             R.id.defaultCountry -> MaterialDialog.Builder(this@FancyTrendActivity)
                     .title(R.string.choose_default_country)
-                    .items(R.array.trend_country_name) //get
+                    .items(fancyTrendPresenter.getAllCountryNames())
+                    //TODO:Check default behavior
                     .itemsCallbackSingleChoice(fancyTrendPresenter.defaultCountryIndex) { _, _, which, _ ->
                         Log.d(TAG, "onSelection:$which")
-                        val code = Constant.getCountryCode(countries[which])
-                        fancyTrendPresenter.defaultCountryCode = code
-                        fancyTrendPresenter.defaultCountryIndex = which
                         for (i in 0 until Constant.DEFAULT_TREND_ITEM_NUMBER) {
-                            fancyTrendPresenter!!.retrieveSingleTrend(code, i)
+                            fancyTrendPresenter.retrieveSingleTrend(fancyTrendPresenter.getAllCountryNames()[which], i)
                         }
-                        Log.d(TAG, "code:$code")
                         true
                     }
                     .positiveText(android.R.string.ok)
