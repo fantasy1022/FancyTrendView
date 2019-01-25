@@ -219,11 +219,12 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
             R.id.defaultCountry -> MaterialDialog.Builder(this@FancyTrendActivity)
                     .title(R.string.choose_default_country)
                     .items(fancyTrendPresenter.getAllCountryNames())
-                    //TODO:Check default behavior
-                    .itemsCallbackSingleChoice(fancyTrendPresenter.defaultCountryIndex) { _, _, which, _ ->
+                    .itemsCallbackSingleChoice(fancyTrendPresenter.defaultCountryIndex) { _, _, which, text ->
                         for (i in 0 until Constant.DEFAULT_TREND_ITEM_NUMBER) {
                             fancyTrendPresenter.retrieveSingleTrend(fancyTrendPresenter.getAllCountryNames()[which], i)
                         }
+                        fancyTrendPresenter.defaultCountryName = text.toString()
+                        fancyTrendPresenter.defaultCountryIndex = which
                         true
                     }
                     .positiveText(android.R.string.ok)
@@ -297,6 +298,5 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
          */
         private val UI_ANIMATION_DELAY = 300
     }
-
 
 }

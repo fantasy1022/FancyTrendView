@@ -16,7 +16,6 @@
 
 package com.fantasy1022.fancytrendapp.presentation.trend
 
-import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.presentation.base.MvpPresenter
 import com.fantasy1022.fancytrendapp.presentation.base.MvpView
 
@@ -35,8 +34,8 @@ interface FancyTrendContract {
     }
 
     interface Presenter : MvpPresenter<View> {
-        var defaultCountryCode: String
         var defaultCountryIndex: Int
+        var defaultCountryName: String
         fun getAllCountryNames():List<String>
         fun retrieveAllTrend()
         fun retrieveSingleTrend(countryName: String, position: Int)

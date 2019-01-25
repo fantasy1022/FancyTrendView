@@ -36,26 +36,6 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
     private var trendArrayMap: Map<String, List<String>> = emptyMap()
     private var myJob: Job? = null
 
-    override var defaultCountryCode: String
-        get() {
-            val result = spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY, "")
-            return if (!result.isEmpty()) {
-                result
-            } else {//Use system language for first time
-                val country = Locale.getDefault().language
-                Log.d(TAG, "country:$country")
-                when (country) {
-                    "zh" -> "12"
-                    "en" -> "1"
-                    else//TODO:map other country
-                    -> "1"
-                }
-            }
-        }
-        set(value) {
-            spUtils.putString(Constant.SP_DEFAULT_COUNTRY_KEY, value)
-        }
-
     override var defaultCountryIndex: Int
         get() {
             val result = spUtils.getInt(Constant.SP_DEFAULT_COUNTRY_INDEX_KEY, -1)
@@ -63,17 +43,32 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
                 result
             } else {//Use system language for first time
                 val country = Locale.getDefault().language
-                Log.d(TAG, "country:$country")
                 when (country) {
-                    "zh" -> 40
-                    "en" -> 45
-                    else//TODO:map other country
-                    -> 45
+                    "zh" -> 41
+                    else -> 46
                 }
             }
         }
         set(value) {
             spUtils.putInt(Constant.SP_DEFAULT_COUNTRY_INDEX_KEY, value)
+        }
+
+    override var defaultCountryName: String
+        get() {
+            val result = spUtils.getString(Constant.SP_DEFAULT_COUNTRY_NAME_KEY, "")
+            return if (result.isNotEmpty()) {
+                result
+            } else {//Use system language for first time
+                val country = Locale.getDefault().language
+                Log.d(TAG, "country:$country")
+                when (country) {
+                    "zh" -> "Taiwan"
+                    else -> "United States"
+                }
+            }
+        }
+        set(value) {
+            spUtils.putString(Constant.SP_DEFAULT_COUNTRY_NAME_KEY, value)
         }
 
     override fun retrieveAllTrend() {
@@ -84,27 +79,9 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
             withContext(Dispatchers.Main) {
                 Log.d(TAG, "Get trend result successful")
                 this@FancyTrendPresenter.trendArrayMap = result
-                //TODO:Get default key
-                view?.showTrendResult(trendArrayMap["Taiwan"]?.toList() ?: emptyList())
+                view?.showTrendResult(trendArrayMap[defaultCountryName]?.toList() ?: emptyList())
             }
         }
-//        addSubscription(trendRepository.allTrend
-//                .doOnSubscribe { view?.showLoading() }
-//                .doFinally { view?.hideLoading() }
-//                .subscribeOn(ioScheduler)
-//                .observeOn(mainScheduler)
-//                .subscribe({ trendArrayMap ->
-//                    Log.d(TAG, "Get trend result successful")
-//                    this@FancyTrendPresenter.trendArrayMap = trendArrayMap
-//                    //TODO:Use last choice
-//                    view?.showTrendResult(trendArrayMap["taiwan"]?.toList() ?: emptyList())//Taiwan
-//                }, {
-//                    Log.d(TAG, "Get trend result failure")
-//                    view?.showErrorScreen()
-//                }))
-//        uiScope.launch {
-//            trendRepository.getAllTrendNew()
-//        }
     }
 
     override fun getAllCountryNames(): List<String> = trendArrayMap.keys.toList().sorted()

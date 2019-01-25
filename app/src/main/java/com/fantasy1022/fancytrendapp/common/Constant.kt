@@ -25,9 +25,8 @@ import java.util.*
 
 object Constant {
     const val GOOGLE_TREND_BASE_URL = "https://trends.google.com/trends/hottrends/visualize/"
-    const val DEFAULT_COUNTRY_CODE = "12"//Taiwan //TODO: remove
-    const val SP_DEFAULT_COUNTRY_KEY = "SP_DEFAULT_COUNTRY_KEY"
     const val SP_DEFAULT_COUNTRY_INDEX_KEY = "SP_DEFAULT_COUNTRY_INDEX_KEY"
+    const val SP_DEFAULT_COUNTRY_NAME_KEY = "SP_DEFAULT_COUNTRY_NAME_KEY"
     const val DEFAULT_ROW_NUMBER = 3
     const val DEFAULT_COLUMN_NUMBER = 3
     const val DEFAULT_TREND_ITEM_NUMBER = DEFAULT_ROW_NUMBER * DEFAULT_COLUMN_NUMBER
