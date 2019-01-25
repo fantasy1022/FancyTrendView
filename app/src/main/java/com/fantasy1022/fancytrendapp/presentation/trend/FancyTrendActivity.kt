@@ -32,7 +32,6 @@ import com.fantasy1022.fancytrendapp.FancyTrendApplication
 import com.fantasy1022.fancytrendapp.R
 import com.fantasy1022.fancytrendapp.common.Constant
 import com.fantasy1022.fancytrendapp.common.GridType
-import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.common.UiUtils
 import kotlinx.android.synthetic.main.activity_google_trend.*
 import javax.inject.Inject
@@ -104,24 +103,10 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
                             this@FancyTrendActivity.toggle()
                             this@FancyTrendActivity.delayedHide(AUTO_HIDE_DELAY_MILLIS)
                         } else {
-                            if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehavior.GoogleSearch) {
-                                //TODO:Use chrome tab to implement
-                                val intent = Intent(Intent.ACTION_WEB_SEARCH)
-                                intent.putExtra(SearchManager.QUERY, trend)
-                                startActivity(intent)
-                            } else if (fancyTrendPresenter.clickBehavior == SPUtils.ClickBehavior.SingleCountry) {
-                                MaterialDialog.Builder(this@FancyTrendActivity)
-                                        .title(R.string.choose_country)
-                                        .items(fancyTrendPresenter.getAllCountryNames())
-                                        .itemsCallback { _, _, position, _ ->
-                                            //TODO:Handle country
-//                                            fancyTrendPresenter.retrieveSingleTrend(fancyTrendPresenter.getAllCountryNames()[position], position)
-//                                            fancyTrendPresenter.getAllCountryNames()[position]
-//                                            val code = Constant.getCountryCode(text.toString())
-//                                            fancyTrendPresenter.retrieveSingleTrend(code, position)
-                                        }
-                                        .show()
-                            }
+                            //TODO:Use chrome tab to implement
+                            val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                            intent.putExtra(SearchManager.QUERY, trend)
+                            startActivity(intent)
                         }
                     }
                 })
@@ -236,21 +221,8 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
                     .items(fancyTrendPresenter.getAllCountryNames())
                     //TODO:Check default behavior
                     .itemsCallbackSingleChoice(fancyTrendPresenter.defaultCountryIndex) { _, _, which, _ ->
-                        Log.d(TAG, "onSelection:$which")
                         for (i in 0 until Constant.DEFAULT_TREND_ITEM_NUMBER) {
                             fancyTrendPresenter.retrieveSingleTrend(fancyTrendPresenter.getAllCountryNames()[which], i)
-                        }
-                        true
-                    }
-                    .positiveText(android.R.string.ok)
-                    .show()
-            R.id.clickBehavior -> MaterialDialog.Builder(this@FancyTrendActivity)
-                    .title(R.string.choose_click_behavior)
-                    .items(R.array.click_behavior_item_name)
-                    .itemsCallbackSingleChoice(fancyTrendPresenter.clickBehavior.value) { dialog, itemView, which, text ->
-                        fancyTrendPresenter.clickBehavior = when (which) {
-                            0 -> SPUtils.ClickBehavior.GoogleSearch
-                            else -> SPUtils.ClickBehavior.SingleCountry
                         }
                         true
                     }

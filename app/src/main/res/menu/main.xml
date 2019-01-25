@@ -30,11 +30,4 @@
         android:title="@string/choose_default_country"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/clickBehavior"
-        android:icon="@drawable/ic_touch_app_white_24dp"
-        android:orderInCategory="3"
-        android:title="@string/choose_click_behavior"
-        app:showAsAction="ifRoom" />
-
 </menu>

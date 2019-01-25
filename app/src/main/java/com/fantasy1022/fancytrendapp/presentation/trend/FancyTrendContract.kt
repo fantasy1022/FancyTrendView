@@ -37,7 +37,6 @@ interface FancyTrendContract {
     interface Presenter : MvpPresenter<View> {
         var defaultCountryCode: String
         var defaultCountryIndex: Int
-        var clickBehavior: SPUtils.ClickBehavior
         fun getAllCountryNames():List<String>
         fun retrieveAllTrend()
         fun retrieveSingleTrend(countryName: String, position: Int)

@@ -75,19 +75,6 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
         set(value) {
             spUtils.putInt(Constant.SP_DEFAULT_COUNTRY_INDEX_KEY, value)
         }
-    override var clickBehavior: SPUtils.ClickBehavior
-        get() = if (spUtils.getInt(Constant.SP_DEFAULT_CLICK_BEHAVIOR_KEY, 0) == SPUtils.ClickBehavior.GoogleSearch.value) {
-            SPUtils.ClickBehavior.GoogleSearch
-        } else {
-            SPUtils.ClickBehavior.SingleCountry
-        }
-        set(value) {
-            if (value == SPUtils.ClickBehavior.GoogleSearch) {
-                spUtils.putInt(Constant.SP_DEFAULT_CLICK_BEHAVIOR_KEY, SPUtils.ClickBehavior.GoogleSearch.value)
-            } else {
-                spUtils.putInt(Constant.SP_DEFAULT_CLICK_BEHAVIOR_KEY, SPUtils.ClickBehavior.GoogleSearch.value)
-            }
-        }
 
     override fun retrieveAllTrend() {
         checkViewAttached()

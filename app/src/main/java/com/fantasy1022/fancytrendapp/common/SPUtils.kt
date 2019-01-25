@@ -26,19 +26,6 @@ import android.content.SharedPreferences
 class SPUtils(context: Context) {
     private val sp: SharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor
-//
-//    @IntDef(ClickBehaviorItem.singlecountry, ClickBehaviorItem.googleSearch)
-//    @Retention(RetentionPolicy.SOURCE)
-//    annotation class ClickBehaviorItem {
-//        companion object {
-//            val googleSearch = 0
-//            val singlecountry = 1
-//        }
-//    }
-
-    enum class ClickBehavior(val value: Int) {
-        GoogleSearch(0), SingleCountry(1)
-    }
 
     init {
         editor = sp.edit()
@@ -60,6 +47,5 @@ class SPUtils(context: Context) {
     fun getInt(key: String, defaultValue: Int): Int {
         return sp.getInt(key, defaultValue)
     }
-
 
 }

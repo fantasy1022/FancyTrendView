@@ -18,7 +18,6 @@
     <string name="choose_country">Choose country</string>
     <string name="choose_grid">Choose grid</string>
     <string name="choose_default_country">Choose default country</string>
-    <string name="choose_click_behavior">Choose click behavior</string>
     <string name="trend_error">Do not have the newest trend.</string>
 
     <string-array name="grid_item_name" translatable="false">
