@@ -84,6 +84,7 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
     //        }
     //    };
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.FullscreenTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_trend)
         decorView = window.decorView
