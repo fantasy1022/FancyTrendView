@@ -16,15 +16,12 @@
 
 package com.fantasy1022.fancytrendapp
 
-import android.app.Application
 
+import android.app.Application
 import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.injection.FancyTrendComponent
 import com.fantasy1022.fancytrendapp.injection.FancyTrendPresenterModule
-
-
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.fantasy1022.fancytrendapp.injection.NetworkModule
 
 /**
  * Created by fantasy1022 on 2017/3/15.
@@ -38,8 +35,9 @@ class FancyTrendApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder()
+                .networkModule(NetworkModule)
                 .build()
 
-        fancyTrendComponent = appComponent.plus(FancyTrendPresenterModule(Schedulers.io(), AndroidSchedulers.mainThread(), SPUtils(this)))
+        fancyTrendComponent = appComponent.plus(FancyTrendPresenterModule(SPUtils(this)))
     }
 }

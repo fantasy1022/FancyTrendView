@@ -16,16 +16,11 @@
 
 package com.fantasy1022.fancytrendapp.data
 
-import android.support.v4.util.ArrayMap
-import io.reactivex.Single
-
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
 interface TrendRepository {
-
-    val allTrend: Single<ArrayMap<String, List<String>>>//TODO:remove
 
     suspend fun getAllTrendCoroutine(): Map<String, List<String>>
 }

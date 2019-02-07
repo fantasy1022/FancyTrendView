@@ -21,7 +21,6 @@ import com.fantasy1022.fancytrendapp.common.Constant
 import com.fantasy1022.fancytrendapp.common.SPUtils
 import com.fantasy1022.fancytrendapp.data.TrendRepository
 import com.fantasy1022.fancytrendapp.presentation.base.BasePresenter
-import io.reactivex.Scheduler
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -29,8 +28,7 @@ import java.util.*
  * Created by fantasy1022 on 2017/2/7.
  */
 
-class FancyTrendPresenter(private val spUtils: SPUtils, private val trendRepository: TrendRepository,
-                          private val ioScheduler: Scheduler, private val mainScheduler: Scheduler)
+class FancyTrendPresenter(private val spUtils: SPUtils, private val trendRepository: TrendRepository)
     : BasePresenter<FancyTrendContract.View>(), FancyTrendContract.Presenter {
     private val TAG = javaClass.simpleName
     private var trendArrayMap: Map<String, List<String>> = emptyMap()

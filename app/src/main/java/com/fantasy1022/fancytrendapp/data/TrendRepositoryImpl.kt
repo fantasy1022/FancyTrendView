@@ -16,23 +16,14 @@
 
 package com.fantasy1022.fancytrendapp.data
 
-import android.support.v4.util.ArrayMap
 import com.fantasy1022.fancytrendapp.common.modifyFirstCharToUpperCase
 import com.fantasy1022.fancytrendapp.data.remote.FancyTrendRestService
-import io.reactivex.Single
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
 class TrendRepositoryImpl(private val googleTrendRestService: FancyTrendRestService) : TrendRepository {
-
-    override//TODO:Check  Retry mechanisms, backoff mechanisms and error handling
-    val allTrend: Single<ArrayMap<String, List<String>>>
-        get() = Single.defer { googleTrendRestService.googleTrend }
-                .retry(1)
-                .timeout(3, TimeUnit.SECONDS)
 
     @Throws(Exception::class)
     override suspend fun getAllTrendCoroutine(): Map<String, List<String>> {

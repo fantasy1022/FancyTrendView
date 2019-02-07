@@ -45,9 +45,6 @@ ext {
     // App dependencies
     supportLibraryVersion = '27.1.1'
     retrofitVersion = '2.1.0'
-    rxJava2AdapterVersion = '1.0.0'
-    rxJava2Version = '2.0.6'
-    rxAndroidVersion = '2.1.0'
     okhttp3Version = '3.6.0'
     gsonVersion = '2.7'
     materialDialogsVersion = '0.9.3.0'

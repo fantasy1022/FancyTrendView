@@ -16,10 +16,6 @@
 
 package com.fantasy1022.fancytrendapp.presentation.base
 
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-
-
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
@@ -29,8 +25,6 @@ open class BasePresenter<T : MvpView> : MvpPresenter<T> {
     var view: T? = null
         private set
 
-    private val compositeDisposable = CompositeDisposable()
-
     private val isViewAttached: Boolean
         get() = view != null
 
@@ -39,7 +33,6 @@ open class BasePresenter<T : MvpView> : MvpPresenter<T> {
     }
 
     override fun detachView() {
-        compositeDisposable.clear()
         view = null
     }
 
@@ -47,11 +40,6 @@ open class BasePresenter<T : MvpView> : MvpPresenter<T> {
         if (!isViewAttached) {
             throw MvpViewNotAttachedException()
         }
-    }
-
-
-    protected fun addSubscription(subscription: Disposable) {
-        this.compositeDisposable.add(subscription)
     }
 
     class MvpViewNotAttachedException : RuntimeException("Please call Presenter.attachView(MvpView) before" + " requesting data to the Presenter")

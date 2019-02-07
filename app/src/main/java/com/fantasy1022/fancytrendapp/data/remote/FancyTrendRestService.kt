@@ -18,7 +18,6 @@ package com.fantasy1022.fancytrendapp.data.remote
 
 
 import android.support.v4.util.ArrayMap
-import io.reactivex.Single
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
@@ -26,9 +25,6 @@ import retrofit2.http.GET
  * Created by fantasy1022 on 2017/2/7.
  */
 interface FancyTrendRestService {
-
-    @get:GET("internal/data")
-    val googleTrend: Single<ArrayMap<String, List<String>>>//TODO:Remove
 
     @get:GET("internal/data")
     val googleTrendNew: Deferred<ArrayMap<String, List<String>>>

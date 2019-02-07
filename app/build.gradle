@@ -19,7 +19,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'spoon'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -65,7 +64,7 @@ android {
     android.variantFilter { variant ->
         if (variant.buildType.name.equals('release')
                 && variant.getFlavors().get(0).name.equals('mock')) {
-            variant.setIgnore(true);
+            variant.setIgnore(true)
         }
     }
 
@@ -92,8 +91,8 @@ spoon {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':library')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':library')
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
@@ -110,37 +109,32 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$lifecycleVersion"
 
     //Retrofit2
-    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$rootProject.rxJava2AdapterVersion"
-
-    //RxJava2
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJava2Version"
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
     //OKhttp3
-    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version"
-    compile "com.squareup.okhttp3:mockwebserver:$rootProject.okhttp3Version"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version"
+    implementation "com.squareup.okhttp3:mockwebserver:$rootProject.okhttp3Version"
 
-    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
     //UI
-    compile "com.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion"
+    implementation "com.afollestad.material-dialogs:core:$rootProject.materialDialogsVersion"
 
     //Dependencies for JUNit and unit tests.
-    testCompile "junit:junit:$rootProject.junitVersion"
-    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     //2.7.11 is the newest version
-    testCompile("org.powermock:powermock-module-junit4:$rootProject.powerMockito")
-    testCompile("org.powermock:powermock-api-mockito:$rootProject.powerMockito")
+    testImplementation("org.powermock:powermock-module-junit4:$rootProject.powerMockito")
+    testImplementation("org.powermock:powermock-api-mockito:$rootProject.powerMockito")
 
     //Dependencies for Espresso
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
         exclude group: 'com.android.support'
         exclude module: 'support-annotations'
         exclude module: 'recyclerview-v7'
@@ -148,18 +142,18 @@ dependencies {
     }
 
     // Android JUnit Runner
-    androidTestCompile("com.android.support.test:runner:$rootProject.runnerVersion") {
+    androidTestImplementation("com.android.support.test:runner:$rootProject.runnerVersion") {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
     // JUnit4 Rules
-    androidTestCompile("com.android.support.test:rules:$rootProject.rulesVersion") {
+    androidTestImplementation("com.android.support.test:rules:$rootProject.rulesVersion") {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
 
     //Spoon
-    androidTestCompile "com.jraska:falcon-spoon-compat:$rootProject.spoonCompactVersion"
+    androidTestImplementation "com.jraska:falcon-spoon-compat:$rootProject.spoonCompactVersion"
 
     // UiAutomator
     androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:$rootProject.uiautomatorVersion"
@@ -174,7 +168,7 @@ dependencies {
 //    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
 
     //Dagger2
-    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
     configurations.all {

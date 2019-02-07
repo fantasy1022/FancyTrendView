@@ -92,7 +92,6 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
         fancyTrendPresenter.attachView(this)
         isVisibleContent = true
         setUpRecyclerView()
-        //TODO:Show loading
         fancyTrendPresenter.retrieveAllTrend()
     }
 
