@@ -74,13 +74,20 @@ class FancyTrendPresenter(private val spUtils: SPUtils, private val trendReposit
     override fun retrieveAllTrend() {
         checkViewAttached()
         view?.showLoading()
-        myJob = CoroutineScope(Dispatchers.IO).launch {
-            val result = trendRepository.getAllTrendCoroutine()
-            withContext(Dispatchers.Main) {
-                Log.d(TAG, "Get trend result successful")
-                this@FancyTrendPresenter.trendArrayMap = result
-                view?.showTrendResult(trendArrayMap[defaultCountryName]?.toList() ?: emptyList())
+        myJob = GlobalScope.launch((Dispatchers.IO)) {
+            try {
+                val result = trendRepository.getAllTrendCoroutine()
+                withContext(Dispatchers.Main) {
+                    Log.d(TAG, "Get trend result successful")
+                    this@FancyTrendPresenter.trendArrayMap = result
+                    view?.showTrendResult(trendArrayMap[defaultCountryName]?.toList()
+                            ?: emptyList())
+                    view?.hideLoading()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 view?.hideLoading()
+                view?.showErrorScreen()
             }
         }
     }

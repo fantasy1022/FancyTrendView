@@ -34,12 +34,11 @@ class TrendRepositoryImpl(private val googleTrendRestService: FancyTrendRestServ
                 .retry(1)
                 .timeout(3, TimeUnit.SECONDS)
 
+    @Throws(Exception::class)
     override suspend fun getAllTrendCoroutine(): Map<String, List<String>> {
         //TODO:Add result to db
-        val trend = googleTrendRestService.googleTrendNew.await()
-
-        //EX: czech_republic" -> "Czech Republic"
-        return trend.map { it ->
+        return googleTrendRestService.googleTrendNew.await().map {
+            //EX: czech_republic" -> "Czech Republic"
             it.key.replace("_", " ").modifyFirstCharToUpperCase() to it.value
         }.toMap()
     }
