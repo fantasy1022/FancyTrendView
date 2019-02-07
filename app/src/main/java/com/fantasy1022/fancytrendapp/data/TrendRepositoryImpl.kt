@@ -38,7 +38,6 @@ class TrendRepositoryImpl(private val googleTrendRestService: FancyTrendRestServ
         //TODO:Add result to db
         val trend = googleTrendRestService.googleTrendNew.await()
 
-        //TODO:1.Modify key to first char to Upper case.(StringExtension)
         //EX: czech_republic" -> "Czech Republic"
         return trend.map { it ->
             it.key.replace("_", " ").modifyFirstCharToUpperCase() to it.value

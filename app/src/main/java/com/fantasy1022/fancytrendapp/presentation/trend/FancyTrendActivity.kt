@@ -145,11 +145,11 @@ class FancyTrendActivity : AppCompatActivity(), FancyTrendContract.View {
     }
 
     override fun showLoading() {
-        Log.d(TAG, "showLoading")
+        trendProgressBar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        Log.d(TAG, "hideLoading")
+        trendProgressBar.visibility = View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
