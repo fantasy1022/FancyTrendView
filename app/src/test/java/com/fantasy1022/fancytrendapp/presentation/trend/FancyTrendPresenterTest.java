@@ -74,14 +74,14 @@ public class FancyTrendPresenterTest {
     @Test
     public void getGoogleTrend_ReturnResult() {
         //Given
-        when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
-        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
+        when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.INSTANCE.generateTrendMap()));
+        when(spUtils.getString(Constant.INSTANCE.getSP_DEFAULT_COUNTRY_KEY(),"")).thenReturn(Constant.INSTANCE.getDEFAULT_COUNTRY_CODE());
         //When
         fancyTrendPresenter.retrieveAllTrend();
         //Then
         verify(view).showLoading();
         verify(view).hideLoading();
-        verify(view).showTrendResult(Constant.generateTrendMap().get(Constant.DEFAULT_COUNTRY_CODE));//TODO:Change to getDefaultcode
+        verify(view).showTrendResult(Constant.INSTANCE.generateTrendMap().get(Constant.INSTANCE.getDEFAULT_COUNTRY_CODE()));//TODO:Change to getDefaultcode
         verify(view, never()).showErrorScreen();
     }
 
@@ -89,7 +89,7 @@ public class FancyTrendPresenterTest {
     public void getGoogleTrend_ReturnError() {
         //Given 
         when(trendRepository.getAllTrend()).thenReturn(Single.error(new IOException()));
-        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
+        when(spUtils.getString(Constant.INSTANCE.getSP_DEFAULT_COUNTRY_KEY(),"")).thenReturn(Constant.INSTANCE.getDEFAULT_COUNTRY_CODE());
         //When 
         fancyTrendPresenter.retrieveAllTrend();
         //Then 
@@ -102,8 +102,8 @@ public class FancyTrendPresenterTest {
     @Test
     public void changeCountryTrend() { //Get all trend firstly
         //Given 
-        when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
-        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
+        when(trendRepository.getAllTrend()).thenReturn(Single.just(Constant.INSTANCE.generateTrendMap()));
+        when(spUtils.getString(Constant.INSTANCE.getSP_DEFAULT_COUNTRY_KEY(),"")).thenReturn(Constant.INSTANCE.getDEFAULT_COUNTRY_CODE());
         //When 
         fancyTrendPresenter.retrieveAllTrend();
         fancyTrendPresenter.retrieveSingleTrend(anyString(), anyInt());
@@ -115,7 +115,7 @@ public class FancyTrendPresenterTest {
 
     @Test(expected = BasePresenter.MvpViewNotAttachedException.class)
     public void search_NotAttached_ThrowsMvpException() {
-        when(spUtils.getString(Constant.SP_DEFAULT_COUNTRY_KEY,"")).thenReturn(Constant.DEFAULT_COUNTRY_CODE);
+        when(spUtils.getString(Constant.INSTANCE.getSP_DEFAULT_COUNTRY_KEY(),"")).thenReturn(Constant.INSTANCE.getDEFAULT_COUNTRY_CODE());
 
         fancyTrendPresenter.detachView();
         fancyTrendPresenter.retrieveAllTrend();

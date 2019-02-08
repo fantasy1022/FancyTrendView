@@ -14,11 +14,34 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.presentation.base;
+package com.fantasy1022.fancytrendapp.presentation.base
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
-public interface MvpView {
+open class BasePresenter<T : MvpView> : MvpPresenter<T> {
+
+    var view: T? = null
+        private set
+
+    private val isViewAttached: Boolean
+        get() = view != null
+
+    override fun attachView(mvpView: T) {
+        view = mvpView
+    }
+
+    override fun detachView() {
+        view = null
+    }
+
+    fun checkViewAttached() {
+        if (!isViewAttached) {
+            throw MvpViewNotAttachedException()
+        }
+    }
+
+    class MvpViewNotAttachedException : RuntimeException("Please call Presenter.attachView(MvpView) before" + " requesting data to the Presenter")
 }
+

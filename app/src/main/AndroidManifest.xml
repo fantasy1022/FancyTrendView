@@ -19,7 +19,7 @@
     package="com.fantasy1022.fancytrendapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    //For spoon to capture screenshot
+    <!--//For spoon to capture screenshot-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -33,7 +33,7 @@
             android:name=".presentation.trend.FancyTrendActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

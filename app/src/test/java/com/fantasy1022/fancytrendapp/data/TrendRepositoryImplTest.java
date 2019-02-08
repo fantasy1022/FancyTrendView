@@ -64,7 +64,7 @@ public class TrendRepositoryImplTest {
     @Test
     public void getGoogleTrend_200Response() {
         //Given
-        when(fancyTrendRestService.getGoogleTrend()).thenReturn(Single.just(Constant.generateTrendMap()));
+        when(fancyTrendRestService.getGoogleTrend()).thenReturn(Single.just(Constant.INSTANCE.generateTrendMap()));
 
         //When
         TestObserver<ArrayMap<String, List<String>>> subscriber = new TestObserver<>();
@@ -80,7 +80,7 @@ public class TrendRepositoryImplTest {
     @Test
     public void getGoogleTrend_200ResponseDelay5Secs() {
         //Given
-        when(fancyTrendRestService.getGoogleTrend()).thenReturn(Single.just(Constant.generateTrendMap()).delay(5, TimeUnit.SECONDS));
+        when(fancyTrendRestService.getGoogleTrend()).thenReturn(Single.just(Constant.INSTANCE.generateTrendMap()).delay(5, TimeUnit.SECONDS));
 
         //When
         TestObserver<ArrayMap<String, List<String>>> subscriber = new TestObserver<>();
@@ -125,7 +125,7 @@ public class TrendRepositoryImplTest {
     @Test//Test retry logic
     public void getGoogleTrend_IOExceptionThan200Response() {
         //Given
-        when(fancyTrendRestService.getGoogleTrend()).thenReturn(getIOExceptionError(), Single.just(Constant.generateTrendMap()));
+        when(fancyTrendRestService.getGoogleTrend()).thenReturn(getIOExceptionError(), Single.just(Constant.INSTANCE.generateTrendMap()));
 
         //When
         TestObserver<ArrayMap<String, List<String>>> subscriber = new TestObserver<>();

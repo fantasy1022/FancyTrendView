@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.data.remote;
-
-
-import android.support.v4.util.ArrayMap;
-
-import java.util.List;
-
-import io.reactivex.Single;
-import retrofit2.http.GET;
+package com.fantasy1022.fancytrendapp.presentation.base
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
-public interface FancyTrendRestService {
-
-    @GET("/api/terms/")
-    Single<ArrayMap<String, List<String>>> getGoogleTrend();
-}
+interface MvpView

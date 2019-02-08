@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-package com.fantasy1022.fancytrendapp.data;
-
-import android.support.v4.util.ArrayMap;
-
-
-import java.util.List;
-
-import io.reactivex.Single;
+package com.fantasy1022.fancytrendapp.presentation.base
 
 /**
  * Created by fantasy1022 on 2017/2/7.
  */
 
-public interface TrendRepository {
+interface MvpPresenter<V : MvpView> {
 
-    Single<ArrayMap<String, List<String>>> getAllTrend();
+    fun attachView(mvpView: V)
+
+    fun detachView()
 }
